@@ -103,7 +103,7 @@ a {
 </template>
 --------------------------------------------------------------------------------
 <script>
-import axios from 'axios';
+import getTorrents from '../../scraper';
 
 export default {
   name: 'torrent-dropdown',
@@ -123,20 +123,18 @@ export default {
   },
   methods: {
     getTorrents: function (query) {
-      var vm = this;
-      axios.get('/api/gettorrents/' + query)
-        .then(function (response) {
-          const data = response.data;
-          console.log('getTorrents response:', query, data);
-          vm.torrentlist = data;
-          vm.selected = data[0];
-        })
-        .catch(function (error) {
-          console.log(error, "error");
-        });
+      getTorrents(query)
+      .then(torrent => {
+        if (torrent.torrentData[0]) {
+          this.torrentlist = torrent.torrentData;
+          this.selected = torrent.torrentData[0];
+        } else {
+          Error('torrentData did not contain anything');
+        }
+      })
+      .catch(e => Error(e));
     },
     downloadTorrent: function (arg) {
-      console.log(arg);
       window.location = arg;
     }
   },
@@ -148,7 +146,6 @@ export default {
   },
   watch: {
     episo: function () {
-      console.log(`S${this.episode.season}E${this.episode.episode}`);
       this.getTorrents(`${this.title} S${this.episode.season}E${this.episode.episode}`);
     }
   }

@@ -21,6 +21,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     // semicolons
     'semi': ["warn", "always"],
-    'quotes': ["off", "double", { "allowTemplateLiterals": true }]
+    'quotes': ["off", "double", { "allowTemplateLiterals": true }],
+    'no-unused-vars': ["warn", { "vars": "all", "args": "after-used" }]
   }
 }

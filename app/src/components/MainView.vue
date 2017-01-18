@@ -85,9 +85,12 @@ body {
 import TorrentDropdown from './MainView/TorrentDropdown';
 import ShowPanel from './MainView/ShowPanel';
 
+import produceShowData from '../testapi.js';
+
 import axios from 'axios';
 import mock from '../mockapi';
 mock.onGet('/srryythismakesnosense').reply(200, '');
+axios;
 
 export default {
   name: 'app',
@@ -107,26 +110,10 @@ export default {
       this.isActive = !this.isActive;
     },
     getShows: function () {
-      var vm = this;
-      axios.get('/api/tv')
-        .then(function (response) {
-          console.log(response);
-          const data = response.data.showinfo;
-          vm.showdata = data.map((show) => {
-            return {
-              added: show.added,
-              title: show.seriesName,
-              description: show.overview,
-              image: show.fanart,
-              id: show.id,
-              seasons: show.seasons
-            };
-          });
-          console.log('saved successfully{{response}}', response);
-        })
-        .catch(function (error) {
-          console.log(error, "error");
-        });
+      // var vm = this;
+      produceShowData().then(resp => {
+        this.showdata = resp;
+      });
     }
   },
   computed: {

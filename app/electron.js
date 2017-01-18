@@ -22,7 +22,12 @@ function createWindow () {
    */
   mainWindow = new BrowserWindow({
     height: 600,
-    width: 1000
+    width: 1000,
+    webPreferences: {
+      webSecurity: false,
+      nodeIntegration: true,
+      allowDisplayingInsecureContent: true
+    }
   })
 
   mainWindow.loadURL(config.url)

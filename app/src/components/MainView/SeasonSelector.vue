@@ -55,6 +55,7 @@ $clouds: #ecf0f1;
 </template>
 --------------------------------------------------------------------------------
 <script>
+import {getEpisodes} from '../../testapi';
 import axios from 'axios';
 
 export default {
@@ -73,22 +74,22 @@ export default {
       ]
     };
   },
-  created: function () {
+  created: function () { // this below here is temporairy , i think this attribute is normaly empty now
     this.getEpisodes(Math.max.apply(Math, this.show.seasons)); // Math.max cant be used because not every element in the array can be converted into a number (observer el)
   },
   methods: {
     getEpisodes: function (season) {
       var vm = this;
-      axios.get(`/api/getseason/${this.show.id}/${season}>`)
+      getEpisodes(this.show.id, season)
       .then(function (response) {
-        const data = response.data.data;
-        console.log('getEpisodes response: showid:', vm.show.id, 'season:', season, 'data:', data);
+        const data = response;
+        // console.log('getEpisodes response: showid:', vm.show.id, 'season:', season, 'data:', data);
         vm.episodes = data
                         .filter((eps) => new Date(eps.firstAired).valueOf() < new Date().valueOf())
                         .map((eps) => {
                           // convert episode nr's to strings and fixed lenght of two
                           eps.airedEpisodeNumber = eps.airedEpisodeNumber < 10 ? '0' + eps.airedEpisodeNumber : String(eps.airedEpisodeNumber);
-                          eps.airedSeason = eps.airedSeason.length < 2 ? '0' + String(eps.airedSeason) : String(eps.airedSeason); // why not < 10 instead of lenght prop you might wonder, because of problems with the axios mock adapter
+                          eps.airedSeason = eps.airedSeason < 10 ? '0' + String(eps.airedSeason) : String(eps.airedSeason);
                           return eps;
                         });
         vm.episodes.reverse(); // So the list is ordered most recent -> old
@@ -101,7 +102,6 @@ export default {
   },
   watch: {
     selectedEpisode: function () {
-      console.log(this.selectedEpisode);
       this.$emit('changeEp', {season: this.selectedEpisode.airedSeason, episode: this.selectedEpisode.airedEpisodeNumber});
     }
   }
