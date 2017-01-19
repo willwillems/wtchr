@@ -1,19 +1,19 @@
-import * as types from '../mutation-types'
+import * as types from '../mutation-types';
 
 const state = {
   main: 0
-}
+};
 
 const mutations = {
   [types.DECREMENT_MAIN_COUNTER] (state) {
-    state.main--
+    state.main--;
   },
   [types.INCREMENT_MAIN_COUNTER] (state) {
-    state.main++
+    state.main++;
   }
-}
+};
 
 export default {
   state,
   mutations
-}
+};

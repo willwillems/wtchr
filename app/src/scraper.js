@@ -13,6 +13,10 @@ function getTorrents (show) {
           selector: "font",
           convert: x => (x.split(",")[1].slice(6)) // Do some proccesing here
         },
+        date: {
+          selector: "font",
+          convert: x => (x.split(",")[0].slice(9)) // Do some proccesing here
+        },
         leechers: {
           selector: "td:nth-last-child(1)"
         },

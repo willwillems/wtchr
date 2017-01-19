@@ -48,7 +48,7 @@ $clouds: #ecf0f1;
   .season-panel(@click="showpanelIsActive = !showpanelIsActive", :class="{ active: showpanelIsActive }")
       .episode(:class="{ active: showpanelIsActive }")
           .season-number S{{selectedEpisode.airedSeason}} E{{selectedEpisode.airedEpisodeNumber}}
-          .episode-name {{selectedEpisode.episodeName}}
+          .episode-name {{selectedEpisode.episodeName}} | {{selectedEpisode.firstAired}}
       .episode(v-for="episode in episodes", :class="{ active: showpanelIsActive }", @click="selectedEpisode = episode;")
           .season-number S{{selectedEpisode.airedSeason}} E{{episode.airedEpisodeNumber}}
           .episode-name {{episode.episodeName}}
@@ -56,7 +56,6 @@ $clouds: #ecf0f1;
 --------------------------------------------------------------------------------
 <script>
 import {getEpisodes} from '../../testapi';
-import axios from 'axios';
 
 export default {
   name: 'seasonSelector',
@@ -83,7 +82,7 @@ export default {
       getEpisodes(this.show.id, season)
       .then(function (response) {
         const data = response;
-        // console.log('getEpisodes response: showid:', vm.show.id, 'season:', season, 'data:', data);
+        console.log('getEpisodes response: showid:', vm.show.id, 'season:', season, 'data:', data);
         vm.episodes = data
                         .filter((eps) => new Date(eps.firstAired).valueOf() < new Date().valueOf())
                         .map((eps) => {

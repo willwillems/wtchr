@@ -1,4 +1,4 @@
-import data from '/personalData'
+import data from './personalData';
 
 function renewKey () {
   return;

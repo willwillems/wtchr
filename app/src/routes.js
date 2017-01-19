@@ -13,4 +13,4 @@ export default [
     path: '*',
     redirect: '/'
   }
-]
+];

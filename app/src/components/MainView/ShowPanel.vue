@@ -85,7 +85,7 @@ $prim-red: red;
 <template lang="pug">
   .main-wrapper
     .show-title {{show.title}}
-    .fliepeltje(@click='getEpisodes(6)')
+    .fliepeltje
     .description {{show.description}}
     season-selector(id="seasonselector", :episodes="episodes", :show="show", @changeEp="changeEp")
     .panel(:style="{'background-image': 'url(' + show.image + ')'}")
