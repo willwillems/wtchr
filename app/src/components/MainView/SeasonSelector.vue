@@ -28,18 +28,24 @@ $clouds: #ecf0f1;
         }
     }
     .season-number {
-        font-size: 1.8em;
+        font-size: 1.5em;
         padding: 0px 5px;
         font-family: 'Fira Sans', sans-serif;
         font-weight: 800;
     }
     .episode-name {
         font-size: 0.8em;
-        padding: 0px 5px;
-        color: gray;
+        padding: 0px 5px 4px 5px;
+        color: #5d5d5d;
     }
     &.active {
         height: 8rem; // twice original
+    }
+    .episode-date {
+        font-size: 0.5em;
+        font-style: italic;
+        padding: 0px 0px 2px 5px;
+        color: gray;
     }
 }
 </style>
@@ -48,9 +54,11 @@ $clouds: #ecf0f1;
   .season-panel(@click="showpanelIsActive = !showpanelIsActive", :class="{ active: showpanelIsActive }")
       .episode(:class="{ active: showpanelIsActive }")
           .season-number S{{selectedEpisode.airedSeason}} E{{selectedEpisode.airedEpisodeNumber}}
-          .episode-name {{selectedEpisode.episodeName}} | {{selectedEpisode.firstAired}}
+          .episode-date {{selectedEpisode.firstAired}}
+          .episode-name {{selectedEpisode.episodeName}}
       .episode(v-for="episode in episodes", :class="{ active: showpanelIsActive }", @click="selectedEpisode = episode;")
           .season-number S{{selectedEpisode.airedSeason}} E{{episode.airedEpisodeNumber}}
+          .episode-date {{selectedEpisode.firstAired}}
           .episode-name {{episode.episodeName}}
 </template>
 --------------------------------------------------------------------------------
@@ -82,7 +90,7 @@ export default {
       getEpisodes(this.show.id, season)
       .then(function (response) {
         const data = response;
-        console.log('getEpisodes response: showid:', vm.show.id, 'season:', season, 'data:', data);
+        // console.log('getEpisodes response: showid:', vm.show.id, 'season:', season, 'data:', data);
         vm.episodes = data
                         .filter((eps) => new Date(eps.firstAired).valueOf() < new Date().valueOf())
                         .map((eps) => {
