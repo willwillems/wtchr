@@ -1,8 +1,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-// @import "../assets/sass/colors";
-$prim-red: red;
-$clouds: #ecf0f1;
+@import "../../assets/sass/colors";
+
 .season-panel {
     float: left;
     width: 10rem;

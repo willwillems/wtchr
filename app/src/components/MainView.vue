@@ -1,5 +1,5 @@
 <style lang="scss">
-// @import '../../assets/sass/colors';
+@import "../assets/sass/colors";
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 #app {
     font-family: 'Roboto', Helvetica, Arial, sans-serif;

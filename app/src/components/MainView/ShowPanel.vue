@@ -1,9 +1,8 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-// @import "../assets/sass/colors";
+@import "../../assets/sass/colors";
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans');
 
-$prim-red: red;
 // A wrapper is neccecairy because some decorative elements spill outside the actual panel
 .main-wrapper {
     width: 100%;

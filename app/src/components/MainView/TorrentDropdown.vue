@@ -1,7 +1,8 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-// @import "../assets/sass/colors";
+@import "../../assets/sass/colors";
 $height: 2rem;
+
 .dropdown {
   width: 1000px; // arbitrairy number that is overwritten when initialized
   max-width: 100%; // Should never be bigger than parent div
