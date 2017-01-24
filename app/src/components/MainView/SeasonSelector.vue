@@ -63,7 +63,7 @@ $clouds: #ecf0f1;
 </template>
 --------------------------------------------------------------------------------
 <script>
-import {getEpisodes} from '../../testapi';
+import { getEpisodes } from '../../testapi';
 
 export default {
   name: 'seasonSelector',

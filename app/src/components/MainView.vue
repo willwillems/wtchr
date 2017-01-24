@@ -70,7 +70,7 @@ body {
       span
         i.material-icons face
         d Flame
-      span
+      span(href="login")
         i.material-icons add
         d Add show
       span
@@ -85,12 +85,7 @@ body {
 import TorrentDropdown from './MainView/TorrentDropdown';
 import ShowPanel from './MainView/ShowPanel';
 
-import produceShowData from '../testapi.js';
-
-import axios from 'axios';
-import mock from '../mockapi';
-mock.onGet('/srryythismakesnosense').reply(200, '');
-axios;
+import { produceShowData } from '../testapi.js';
 
 export default {
   name: 'app',

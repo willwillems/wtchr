@@ -2,6 +2,7 @@ import scrapeIt from "scrape-it";
 
 function getTorrents (show) {
   // Promise interface
+  console.log(show);
   return scrapeIt(`https://thepiratebay.org/search/${show}/0/99/0`, {
     torrentData: {
       listItem: "table#searchResult > tr ",

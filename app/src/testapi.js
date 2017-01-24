@@ -1,20 +1,20 @@
 import data from './personalData';
 
-function renewKey () {
+export function renewKey () {
   return;
 }
 
-function keyIsValid () {
+export function keyIsValid () {
   return true;
 }
 
-function checkKey () {
+export function checkKey () {
   if (!keyIsValid) {
     renewKey();
   }
 }
 
-const getAuthKey = new Promise(function (resolve, reject) {
+export const getAuthKey = new Promise(function (resolve, reject) {
   checkKey();
   fetch("https://api.thetvdb.com/login", {
     method: "POST",
@@ -33,10 +33,10 @@ const getAuthKey = new Promise(function (resolve, reject) {
   });
 });
 
-function getFromTVDB (url) {
+export function getFromTVDB (path) {
   return new Promise(function (resolve, reject) {
     getAuthKey.then(key => {
-      fetch(`https://api.thetvdb.com/${url}`, {
+      fetch(`https://api.thetvdb.com/${path}`, {
         method: 'GET',
         headers: {'Authorization': 'Bearer ' + key,
           'Accept': 'application/json',
@@ -50,7 +50,7 @@ function getFromTVDB (url) {
   });
 };
 
-function getFavoriteShowIDs () {
+export function getFavoriteShowIDs () {
   return new Promise(function (resolve, reject) {
     getFromTVDB('user/favorites')
     .then(r => r.favorites)
@@ -59,7 +59,7 @@ function getFavoriteShowIDs () {
   });
 };
 
-function getShowInfo (id) {
+export function getShowInfo (id) {
   return new Promise(function (resolve, reject) {
     getFromTVDB(`series/${id}`)
     .then(r => resolve(r))
@@ -67,7 +67,7 @@ function getShowInfo (id) {
   });
 };
 
-function getSeasons (id) {
+export function getSeasons (id) {
   return new Promise(function (resolve, reject) {
     getFromTVDB(`series/${id}/episodes/summary`)
     .then(r => resolve(r.airedSeasons))
@@ -75,7 +75,7 @@ function getSeasons (id) {
   });
 };
 
-function getEpisodes (id, season) {
+export function getEpisodes (id, season) {
   return new Promise(function (resolve, reject) {
     getFromTVDB(`series/${id}/episodes/query?airedSeason=${season}`)
     .then(r => resolve(r))
@@ -83,7 +83,7 @@ function getEpisodes (id, season) {
   });
 };
 
-function getFanArt (id) {
+export function getFanArt (id) {
   return new Promise(function (resolve, reject) {
     getFromTVDB(`series/${id}/images/query?keyType=fanart&resolution=1920x1080&subKey=graphical`)
     .then(r => (r === undefined ? resolve(undefined) : resolve(`https://thetvdb.com/banners/${r[0].fileName}`))) // ternary operator to prevent weird string
@@ -97,7 +97,7 @@ function getFanArt (id) {
   });
 };
 
-function proccesShowData (shows) {
+export function proccesShowData (shows) {
   // closure to use it inside the promise
   var showsclosure = shows.map((show) => {
     return {
@@ -109,6 +109,7 @@ function proccesShowData (shows) {
   });
   return new Promise(function (resolve, reject) {
     // No idea if this is stupid unconventional or genius
+    // Stupid, async function would have been better
     Promise.all([
       Promise.all(shows.map(show => getFanArt(show.id))),
       Promise.all(shows.map(show => getSeasons(show.id)))
@@ -125,15 +126,13 @@ function proccesShowData (shows) {
   });
 };
 
-function produceShowData () {
+export function produceShowData () {
   console.log('Activated produceShowData');
   return new Promise(function (resolve, reject) {
     getFavoriteShowIDs().then(showids => {
       Promise.all(showids.map(id => getShowInfo(id)))
-      .then(proccesShowData).then(result => resolve(result))
+      .then(proccesShowData).then(resolve)
       .catch(e => reject(Error(e)));
     });
   });
 };
-
-export {produceShowData as default, getEpisodes as getEpisodes};
