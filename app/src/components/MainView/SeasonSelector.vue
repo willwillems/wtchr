@@ -37,6 +37,9 @@ $clouds: #ecf0f1;
         font-size: 0.8em;
         padding: 0px 5px 4px 5px;
         color: #5d5d5d;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     &.active {
         height: 8rem; // twice original
