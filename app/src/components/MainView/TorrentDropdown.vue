@@ -118,21 +118,23 @@ export default {
       selected: {title: 'No torrents found', seeders: 0, leechers: 0, size: 'NaN'}
     };
   },
-  created: function () {
+  updated: function () {
+    // updated otherwise this executes without episode data
     this.getTorrents(`${this.title} S${this.episode.season}E${this.episode.episode}`);
   },
   methods: {
     getTorrents: function (query) {
       getTorrents(query)
       .then(torrent => {
-        if (torrent.torrentData[0]) {
-          this.torrentlist = torrent.torrentData;
-          this.selected = torrent.torrentData[0];
-        } else {
-          Error('torrentData did not contain anything');
-        }
+        if (torrent.torrentData[0] === undefined) {
+          throw new Error(`torrentData[0] was undefined with this query: ${query}`);
+        };
+        this.torrentlist = torrent.torrentData;
+        this.selected = torrent.torrentData[0];
       })
-      .catch(e => Error(e));
+      .catch(e => {
+        throw new Error(e);
+      });
     },
     downloadTorrent: function (arg) {
       window.location = arg;
@@ -141,12 +143,14 @@ export default {
   computed: {
     episo: function () {
       // It is not possible to watch a prop directly hence this proxy
-      return this.episode.episode + this.episode.season;
+      return this.episode.episode * this.episode.season;
     }
   },
   watch: {
     episo: function () {
-      this.getTorrents(`${this.title} S${this.episode.season}E${this.episode.episode}`);
+      if (this.episode.season) {
+        this.getTorrents(`${this.title} S${this.episode.season}E${this.episode.episode}`);
+      };
     }
   }
 };
