@@ -78,7 +78,7 @@ body {
         d Search
     .page-content
       // 'show' must be a string here because of pug but in vanilla HTML would not be one
-      show-panel(v-for='show in searchedShows', :show='show')
+      show-panel(v-for='show in searchedShows', :show='show', :key="show.id")
 </template>
 --------------------------------------------------------------------------------
 <script>
@@ -107,10 +107,10 @@ export default {
     searchedShows: function () {
       const vm = this;
       if (this.searchQuery === '') {
-        // return this.$store.getters.sortedShows;
-        return this.$store.state.showdata.shows;
+        return this.$store.getters.sortedShows;
+        // return this.$store.state.showdata.shows;
       }
-      return this.$store.state.showdata.shows.filter(function (show) {
+      return this.$store.getters.sortedShows.filter(function (show) {
         return show.title.startsWith(vm.searchQuery);
       });
     }
