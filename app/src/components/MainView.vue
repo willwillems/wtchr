@@ -107,6 +107,7 @@ export default {
     searchedShows: function () {
       const vm = this;
       if (this.searchQuery === '') {
+        // return this.$store.getters.sortedShows;
         return this.$store.state.showdata.shows;
       }
       return this.$store.state.showdata.shows.filter(function (show) {

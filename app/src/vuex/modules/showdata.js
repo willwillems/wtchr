@@ -1,21 +1,21 @@
 import Vue from 'vue'; // required for Vue.set
-import * as types from '../mutation-types';
 
 import { produceShowData, getEpisodes } from '../../testapi.js';
 
 // We'll later restructure this so instead of a list and object its one object like this: {123143: {title: "homeland" ---}, ----}
 const state = {
-  shows: [],
-  episodes: {}
+  shows: []
+};
+
+const getters = {
+  sortedShows: state => {
+    return state.shows.slice().sort((a, b) => {
+      return a.episodes.selectedEpisode.lastUpdated - b.episodes.selectedEpisode.lastUpdated;
+    });
+  }
 };
 
 const mutations = {
-  [types.DECREMENT_MAIN_COUNTER] (state) {
-    state.main--;
-  },
-  [types.INCREMENT_MAIN_COUNTER] (state) {
-    state.main++;
-  },
   setShows (state, payload) {
     state.shows = payload;
   },
@@ -65,6 +65,7 @@ const actions = {
 
 export default {
   state,
+  getters,
   mutations,
   actions
 };

@@ -119,11 +119,12 @@ export function proccesShowData (shows) {
       Promise.all(shows.map(show => getSeasons(show.id)))
     ])
     .then(function (response) {
-      return showsclosure.map((show, i) => {
-        show.image = response[0][i];
-        show.seasons = response[1][i];
-        return show;
-      });
+      return showsclosure
+        .map((show, i) => {
+          show.image = response[0][i];
+          show.seasons = response[1][i];
+          return show;
+        });
     })
     .then(resolve)
     .catch(e => reject(Error(e)));
