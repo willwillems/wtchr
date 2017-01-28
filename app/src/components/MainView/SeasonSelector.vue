@@ -58,15 +58,13 @@
           .season-number S{{selectedEpisode.airedSeason}} E{{selectedEpisode.airedEpisodeNumber}}
           .episode-date {{selectedEpisode.firstAired}}
           .episode-name {{selectedEpisode.episodeName}}
-      .episode(v-for="episode in episodes", :class="{ active: showpanelIsActive }", @click="selectedEpisode = episode;")
+      .episode(v-for="episode in episodes", :class="{ active: showpanelIsActive }", @click="$store.commit('setSelectedEpisode', {id: show.id, episode});")
           .season-number S{{selectedEpisode.airedSeason}} E{{episode.airedEpisodeNumber}}
           .episode-date {{selectedEpisode.firstAired}}
           .episode-name {{episode.episodeName}}
 </template>
 --------------------------------------------------------------------------------
 <script>
-import { getEpisodes } from '../../testapi';
-
 export default {
   name: 'seasonSelector',
   props: [
@@ -75,43 +73,27 @@ export default {
   data () {
     return {
       showpanelIsActive: false,
-      selectedEpisode: {},
-      episodes: [
-        {airedEpisodeNumber: '01', episodeName: 'Episode Name'},
-        {airedEpisodeNumber: '03', episodeName: 'Lorem Ipsum'},
-        {airedEpisodeNumber: '04', episodeName: 'Concrete'}
-      ]
+      activeSeason: ''
     };
   },
   created: function () { // this below here is temporairy , i think this attribute is normaly empty now
-    this.getEpisodes(Math.max.apply(Math, this.show.seasons)); // Math.max cant be used because not every element in the array can be converted into a number (observer el)
+    this.activeSeason = Math.max.apply(Math, this.show.seasons); // Math.max cant be used because not every element in the array can be converted into a number (observer el)
+    this.getEpisodes();
   },
   methods: {
-    getEpisodes: function (season) {
-      var vm = this;
-      getEpisodes(this.show.id, season)
-      .then(function (response) {
-        const data = response;
-        // console.log('getEpisodes response: showid:', vm.show.id, 'season:', season, 'data:', data);
-        vm.episodes = data
-                        .filter((eps) => new Date(eps.firstAired).valueOf() < new Date().valueOf())
-                        .map((eps) => {
-                          // convert episode nr's to strings and fixed lenght of two
-                          eps.airedEpisodeNumber = eps.airedEpisodeNumber < 10 ? '0' + eps.airedEpisodeNumber : String(eps.airedEpisodeNumber);
-                          eps.airedSeason = eps.airedSeason < 10 ? '0' + String(eps.airedSeason) : String(eps.airedSeason);
-                          return eps;
-                        });
-        vm.episodes.reverse(); // So the list is ordered most recent -> old
-        vm.selectedEpisode = vm.episodes[0];
-      })
-      .catch(function (error) {
-        console.log(error, "error");
+    getEpisodes: function () {
+      this.$store.dispatch('getEpisodes', {
+        id: this.show.id,
+        season: this.activeSeason
       });
     }
   },
-  watch: {
-    selectedEpisode: function () {
-      this.$emit('changeEp', {season: this.selectedEpisode.airedSeason, episode: this.selectedEpisode.airedEpisodeNumber});
+  computed: {
+    episodes () {
+      return this.show.episodes.seasons[this.activeSeason];
+    },
+    selectedEpisode () {
+      return this.show.episodes.selectedEpisode;
     }
   }
 };

@@ -88,7 +88,7 @@
     .description {{show.description}}
     season-selector(id="seasonselector", :episodes="episodes", :show="show", @changeEp="changeEp")
     .panel(:style="{'background-image': 'url(' + show.image + ')'}")
-      torrent-dropdown(id="dropdown", width="500px", :episode='selectedEpisode', :title='show.title')
+      torrent-dropdown(id="dropdown", width="500px", :show="show")
 </template>
 --------------------------------------------------------------------------------
 <script>

@@ -85,8 +85,6 @@ body {
 import TorrentDropdown from './MainView/TorrentDropdown';
 import ShowPanel from './MainView/ShowPanel';
 
-import { produceShowData } from '../testapi.js';
-
 export default {
   name: 'app',
   data () {
@@ -103,27 +101,21 @@ export default {
   methods: {
     classchange: function () {
       this.isActive = !this.isActive;
-    },
-    getShows: function () {
-      // var vm = this;
-      produceShowData().then(resp => {
-        this.showdata = resp;
-      });
     }
   },
   computed: {
     searchedShows: function () {
       const vm = this;
       if (this.searchQuery === '') {
-        return this.showdata;
+        return this.$store.state.showdata.shows;
       }
-      return this.showdata.filter(function (show) {
+      return this.$store.state.showdata.shows.filter(function (show) {
         return show.title.startsWith(vm.searchQuery);
       });
     }
   },
   created: function () {
-    this.getShows();
+    this.$store.dispatch('getShowData');
   }
 };
 </script>

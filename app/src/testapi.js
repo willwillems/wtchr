@@ -104,7 +104,11 @@ export function proccesShowData (shows) {
       added: show.added,
       title: show.seriesName,
       description: show.overview,
-      id: show.id
+      id: show.id,
+      episodes: {
+        selectedEpisode: {},
+        seasons: []
+      }
     };
   });
   return new Promise(function (resolve, reject) {

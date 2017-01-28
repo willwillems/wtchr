@@ -110,18 +110,13 @@ export default {
   name: 'torrent-dropdown',
   props: [
     'width',
-    'episode',
-    'title'
+    'show'
   ],
   data () {
     return {
       torrentlist: [],
       selected: {title: 'No torrents found', seeders: 0, leechers: 0, size: 'NaN'}
     };
-  },
-  updated: function () {
-    // updated otherwise this executes without episode data
-    this.getTorrents(`${this.title} S${this.episode.season}E${this.episode.episode}`);
   },
   methods: {
     getTorrents: function (query) {
@@ -142,16 +137,13 @@ export default {
     }
   },
   computed: {
-    episo: function () {
-      // It is not possible to watch a prop directly hence this proxy
-      return this.episode.episode * this.episode.season;
+    selectedEpisode () {
+      return this.show.episodes.selectedEpisode;
     }
   },
   watch: {
-    episo: function () {
-      if (this.episode.season) {
-        this.getTorrents(`${this.title} S${this.episode.season}E${this.episode.episode}`);
-      };
+    selectedEpisode: function () {
+      this.getTorrents(`${this.show.title} S${this.selectedEpisode.airedSeason}E${this.selectedEpisode.airedEpisodeNumber}`);
     }
   }
 };
