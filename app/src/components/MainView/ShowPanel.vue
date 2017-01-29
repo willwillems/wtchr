@@ -86,7 +86,7 @@
     .show-title {{show.title}}
     .fliepeltje
     .description {{show.description}}
-    season-selector(id="seasonselector", :episodes="episodes", :show="show", @changeEp="changeEp")
+    season-selector(id="seasonselector", :show="show")
     .panel(:style="{'background-image': 'url(' + show.image + ')'}")
       torrent-dropdown(id="dropdown", width="500px", :show="show")
 </template>
