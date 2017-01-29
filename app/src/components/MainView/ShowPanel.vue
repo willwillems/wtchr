@@ -109,11 +109,6 @@ export default {
     TorrentDropdown,
     SeasonSelector
   },
-  methods: {
-    changeEp: function (ep) {
-      this.selectedEpisode = ep;
-    }
-  },
   watch: {
   }
 };
