@@ -96,7 +96,7 @@ import TorrentDropdown from './TorrentDropdown';
 import SeasonSelector from './SeasonSelector';
 
 export default {
-  name: 'hello',
+  name: 'show-panel',
   props: [
     'show'
   ],
