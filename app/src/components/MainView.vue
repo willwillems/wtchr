@@ -79,13 +79,13 @@ body {
       input(type="text", placeholder="Search", v-model="searchQuery")
       span
         i.material-icons face
-        d Flame
+        router-link(to="/login") login
       span(href="login")
         i.material-icons add
-        d Add show
+        router-link(to="/foo") Delete show
       span
         i.material-icons search
-        d Search
+        router-link(to="/foo") Add show
     .page-content
       //transition-group(name="top-enter", appear)
       // 'show' must be a string here because of pug but in vanilla HTML would not be one
