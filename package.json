@@ -15,6 +15,7 @@
     "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix app test",
     "pack": "cross-env NODE_ENV=production webpack -p --progress --colors",
     "test": "npm run unit && npm run e2e",
+    "jest": "jest",
     "unit": "karma start test/unit/karma.conf.js",
     "vue:route": "node tasks/vue/route.js",
     "vuex:module": "node tasks/vuex/module.js",
@@ -22,6 +23,17 @@
   },
   "author": "Greg Holguin <simulatedgreg@gmail.com>",
   "license": "MIT",
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "vue",
+      "json"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor"
+    }
+  },
   "devDependencies": {
     "babel-core": "^6.8.0",
     "babel-eslint": "^7.0.0",
@@ -52,21 +64,15 @@
     "html-webpack-plugin": "^2.16.1",
     "inject-loader": "^2.0.1",
     "isparta-loader": "^2.0.0",
+    "jest": "^18.1.0",
+    "jest-vue-preprocessor": "^0.1.2",
     "json-loader": "^0.5.4",
-    "karma": "^1.3.0",
-    "karma-chai": "^0.1.0",
-    "karma-coverage": "^1.1.1",
-    "karma-electron": "^4.1.1",
-    "karma-mocha": "^1.2.0",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-spec-reporter": "0.0.26",
-    "karma-webpack": "^1.8.0",
-    "mocha": "^3.0.2",
     "require-dir": "^0.3.0",
     "spectron": "^3.4.0",
     "style-loader": "^0.13.1",
     "tree-kill": "^1.1.0",
     "url-loader": "^0.5.7",
+    "vue": "^2.1.10",
     "vue-hot-reload-api": "^1.3.2",
     "vue-html-loader": "^1.2.2",
     "vue-loader": "^9.5.1",
@@ -82,6 +88,8 @@
     "node-sass": "^4.3.0",
     "pug": "^2.0.0-beta6",
     "sass-loader": "^4.1.1",
-    "scrape-it": "^3.2.2"
+    "scrape-it": "^3.2.2",
+    "vue-loader": "^10.1.2",
+    "vue-template-compiler": "^2.1.10"
   }
 }
