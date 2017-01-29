@@ -61,6 +61,16 @@ body {
   padding-top: 6em; // size of menu bar plus 1 em
   width: 100%;
 }
+
+// transistion
+.top-enter-enter-active, .top-enter-leave-active {
+    transition: opacity 1.8s;
+    transition: transform .8s ease;
+}
+.top-enter-enter, .top-enter-leave-to /* .top-enter-leave-active in <2.1.8 */ {
+    opacity: 0;
+    transform: rotate3d(1,0,0,90deg);
+}
 </style>
 --------------------------------------------------------------------------------
 <template lang="pug">
@@ -77,6 +87,7 @@ body {
         i.material-icons search
         d Search
     .page-content
+      //transition-group(name="top-enter", appear)
       // 'show' must be a string here because of pug but in vanilla HTML would not be one
       show-panel(v-for='show in searchedShows', :show='show', :key="show.id")
 </template>
