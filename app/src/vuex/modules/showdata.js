@@ -1,6 +1,6 @@
 import Vue from 'vue'; // required for Vue.set
 
-import { produceShowData, getEpisodes } from '../../testapi.js';
+import { produceShowData, getEpisodes } from '../../api';
 
 // We'll later restructure this so instead of a list and object its one object like this: {123143: {title: "homeland" ---}, ----}
 const state = {

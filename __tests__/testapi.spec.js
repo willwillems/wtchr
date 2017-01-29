@@ -1,5 +1,5 @@
 /*
-import { getAuthKey } from 'src/testapi';
+import { getAuthKey } from 'src/api';
 import td from 'testdouble';
 
 var api = td.replace(fetch);
