@@ -12,11 +12,16 @@
 .input-wrapper {
   position: relative;
   display: inline-block;
-  margin: 30px 10px;
+  margin: 15px 10px;
 }
 
 .form-wrapper {
-  width: 215px;
+  width: 260px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $clouds;
 }
 
 .inputty {
@@ -63,6 +68,7 @@
 .inputty:active {
   color: black;
   text-indent: 0;
+  border-color: $prim-red;
 
   &::-webkit-input-placeholder {
     color: #aaa;
@@ -71,11 +77,29 @@
     transform: translateY(-30px);
   }
 }
+
+.settings-title {
+  font-size: 15px;
+  text-align: center;
+}
+
+.back-button {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  color: black;
+  :hover {
+    color: $prim-red
+  }
+}
 </style>
 --------------------------------------------------------------------------------
 <template lang="pug">
   #login
     .form-wrapper
+      div(class="settings-title")
+        h1 Settings
+        // i(class="material-icons") settings
       span.input-wrapper
         input(v-model="APIKey", class="inputty", id="state", type="text", placeholder="Liquid, solid, gaseous...")
         label(for="state") APIkey
@@ -85,7 +109,8 @@
       span.input-wrapper
         input(v-model="userkey", class="inputty", id="planet", type="text", placeholder="Probably Earth")
         label(for="planet") Userkey
-      router-link(to="/") home
+    router-link(class="back-button", to="/")
+      i(class="material-icons") arrow_back
 </template>
 --------------------------------------------------------------------------------
 <script>
