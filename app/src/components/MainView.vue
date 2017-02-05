@@ -119,7 +119,6 @@ export default {
       const vm = this;
       if (this.searchQuery === '') {
         return this.$store.getters.sortedShows;
-        // return this.$store.state.showdata.shows;
       }
       return this.$store.getters.sortedShows.filter(function (show) {
         return show.title.startsWith(vm.searchQuery);
