@@ -64,6 +64,7 @@
     "jest": "^18.1.0",
     "jest-vue-preprocessor": "^0.1.2",
     "json-loader": "^0.5.4",
+    "node-sass": "^4.3.0",
     "require-dir": "^0.3.0",
     "spectron": "^3.4.0",
     "style-loader": "^0.13.1",
