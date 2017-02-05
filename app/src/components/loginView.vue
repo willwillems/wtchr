@@ -50,7 +50,7 @@
         h1 Settings
       material-input(v-model="APIKey", :label="'APIkey'", :placeholder="'e.g. VYFIKA2D1FMHMOP7'")
       material-input(v-model="username", :label="'Username'", :placeholder="'e.g. stormagddn123'")
-      material-input(v-model="userkey", :label="'Userkey'", :placeholder="'e.g. 841212'")
+      material-input(v-model="userkey", :label="'Account Identifier'", :placeholder="'e.g. X7EWSD3IMN8WZI60'")
     router-link(class="back-button", to="/")
       i(class="material-icons") arrow_back
 </template>
