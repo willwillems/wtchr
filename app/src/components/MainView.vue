@@ -1,7 +1,7 @@
 <style lang="scss">
 @import "../assets/sass/colors";
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-#app {
+#main {
     font-family: 'Roboto', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -74,7 +74,7 @@ body {
 </style>
 --------------------------------------------------------------------------------
 <template lang="pug">
-  #app
+  #main
     .menu-bar
       input(type="text", placeholder="Search", v-model="searchQuery")
       span
@@ -97,7 +97,7 @@ import TorrentDropdown from './MainView/TorrentDropdown';
 import ShowPanel from './MainView/ShowPanel';
 
 export default {
-  name: 'app',
+  name: 'main',
   data () {
     return {
       isActive: true,
@@ -124,11 +124,6 @@ export default {
         return show.title.startsWith(vm.searchQuery);
       });
     }
-  },
-  created: function () {
-    this.$store.dispatch('getLocalData').then(() => {
-      this.$store.dispatch('getShowData');
-    });
   }
 };
 </script>

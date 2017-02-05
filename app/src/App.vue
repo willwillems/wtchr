@@ -31,6 +31,13 @@
   import store from 'src/vuex/store';
 
   export default {
-    store
+    store,
+    created: function () {
+      // This can't be in the mainview component because then it constantly
+      // updates while navigating between login and main
+      this.$store.dispatch('getLocalData').then(() => {
+        this.$store.dispatch('getShowData');
+      });
+    }
   };
 </script>
