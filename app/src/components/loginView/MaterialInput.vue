@@ -76,7 +76,7 @@
     input(v-bind:value="value",
           v-on:input="updateValue($event.target.value)",
           type="text",
-          placeholder="e.g. VYFIKA2D1FMHMOP7",
+          :placeholder="placeholder",
           required)
     hr
     label {{label}}
