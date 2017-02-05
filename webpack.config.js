@@ -17,6 +17,7 @@ let config = {
     build: path.join(__dirname, 'app/src/main.js')
   },
   module: {
+    noParse: /node_modules\/localforage\/dist\/localforage.js/,
     preLoaders: [],
     loaders: [
       {
