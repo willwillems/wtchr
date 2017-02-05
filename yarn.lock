@@ -2035,13 +2035,6 @@ ejs@^2.3.1:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.5.5.tgz#6ef4e954ea7dcf54f66aad2fe7aa421932d9ed77"
 
-electron:
-  version "1.4.14"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-1.4.14.tgz#e374b76ccdc432bccad9bb3ce1add453bf5648b4"
-  dependencies:
-    electron-download "^3.0.1"
-    extract-zip "^1.0.3"
-
 electron-chromedriver@~1.4.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/electron-chromedriver/-/electron-chromedriver-1.4.1.tgz#3339281b82971347bb0399ad2534092ee07cdc0a"
@@ -2119,6 +2112,13 @@ electron-rebuild@^1.1.3:
     rimraf "^2.5.0"
     spawn-rx "^2.0.7"
     yargs "^3.31.0"
+
+electron@^1.4.15:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-1.5.0.tgz#d783d5ca8c89fd781b04c6ca75652c55bbdb80d5"
+  dependencies:
+    electron-download "^3.0.1"
+    extract-zip "^1.0.3"
 
 emojis-list@^2.0.0:
   version "2.1.0"
@@ -4628,9 +4628,9 @@ node-pre-gyp@^0.6.29:
     tar "~2.2.1"
     tar-pack "~3.3.0"
 
-node-sass@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.3.0.tgz#d014f64595d77b26af99e9f7a7e74704d9976bda"
+node-sass@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.5.0.tgz#532e37bad0ce587348c831535dbc98ea4289508b"
   dependencies:
     async-foreach "^0.1.3"
     chalk "^1.1.1"
@@ -6811,7 +6811,7 @@ vue-html-loader@^1.2.2:
     loader-utils "^0.2.15"
     object-assign "^4.1.0"
 
-vue-loader:
+vue-loader@^10.1.2:
   version "10.1.2"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-10.1.2.tgz#4da0859254b6f4c481880c95d22f1988ca6d2b8b"
   dependencies:
