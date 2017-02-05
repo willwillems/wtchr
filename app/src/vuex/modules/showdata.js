@@ -31,8 +31,8 @@ const mutations = {
 };
 
 const actions = {
-  async getShowData ({ commit }) {
-    commit('setShows', await produceShowData());
+  async getShowData ({ commit, rootState }) {
+    commit('setShows', await produceShowData(rootState.settings));
   },
   getEpisodes ({ commit }, { id, season }) {
     getEpisodes(id, season)

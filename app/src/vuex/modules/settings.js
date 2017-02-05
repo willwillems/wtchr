@@ -1,3 +1,9 @@
+import localforage from 'localforage';
+
+var settingsStorage = localforage.createInstance({
+  name: "settings"
+});
+
 const state = {
   theTVDBLogin: {
     APIKey: "",
@@ -18,7 +24,16 @@ const mutations = {
   }
 };
 
+const actions = {
+  getLocalData ({ commit }) {
+    return settingsStorage.iterate(function (value, key) {
+      commit(key, value);
+    });
+  }
+};
+
 export default {
   state,
-  mutations
+  mutations,
+  actions
 };

@@ -126,7 +126,9 @@ export default {
     }
   },
   created: function () {
-    this.$store.dispatch('getShowData');
+    this.$store.dispatch('getLocalData').then(() => {
+      this.$store.dispatch('getShowData');
+    });
   }
 };
 </script>

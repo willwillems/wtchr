@@ -1,5 +1,3 @@
-import data from './personalData';
-
 export function _renewKey () {
   return;
 };
@@ -35,7 +33,7 @@ export function _getAuthKey (fetch) {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(settings.theTVDBLogin)
     })
     .then(r => r.json())
     .then(function (response) {
@@ -177,6 +175,7 @@ export function proccesShowData (shows) {
 };
 
 export function _produceShowData () {
+  getAuthKey();
   console.log('Activated produceShowData');
   return new Promise(function (resolve, reject) {
     getFavoriteShowIDs()
@@ -189,6 +188,9 @@ export function _produceShowData () {
   });
 };
 
-export function produceShowData () {
+var settings = {};
+export function produceShowData (set) {
+  // OK I know this isn't very prety but I'm in a hurry bro
+  settings = set;
   return _produceShowData();
 };
