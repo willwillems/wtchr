@@ -4,9 +4,10 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,300,800);
 
 #login {
-  font-family: "Open Sans", sans-serif;
-  font-weight: 300;
-  color: #fff;
+  // font-family: "Open Sans", sans-serif;
+  font: 14px/1.21 Roboto, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-weight: 100;
+  color: grey;
 }
 
 .input-wrapper {
@@ -21,66 +22,82 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: $clouds;
 }
 
-.inputty {
-  display: inline-block;
-  width: 215px;
-  padding: 10px 0 10px 18px;
-  font-family: "Open Sans", sans;
-  font-weight: 400;
-  color: grey;
-  border-width: 2px;
-  border-color: black;
-  border-style: solid;
-  text-indent: 60px; // Arbitrary.
-  transition: all .3s ease-in-out;
-  vertical-align: middle;
+// Shamelesly copied from: http://codepen.io/anon/pen/egKded
+.material {
+	position: relative;
+	padding: 0;
+	margin: 5px;
+	border: none;
+	overflow: visible;
 
-  + label {
-     display: inline-block;
-     position: absolute;
-     top: 7px;
-     left: 0;
-     bottom: 8px;
-     padding: 5px 15px;
-     color: #032429;
-     font-size: 11px;
-     font-weight: 700;
-     text-transform: uppercase;
-     text-shadow: 0 1px 0 rgba(19,74,70,0);
-     transition: all .3s ease-in-out;
+	input {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 12px 10px 8px;
+		border: none;
+		border-radius: 0;
+		box-shadow: none;
+		border-bottom: 1px solid #DDD;
+		font-size: 120%;
+		outline: none;
+		cursor: text;
 
-     &:after {
-       position: absolute;
-       content: "";
-       width: 0;
-       height: 0;
-       top: 100%;
-       left: 50%;
-       margin-left: -3px;
-       transition: all .3s ease-in-out;
-     }
-  }
-}
-.inputty:focus,
-.inputty:active {
-  color: black;
-  text-indent: 0;
-  border-color: $prim-red;
+		&::-webkit-input-placeholder {
+			transition: color 300ms ease;
+		}
+		&:not(:focus)::-webkit-input-placeholder {
+			color: transparent;
+		}
+	}
 
-  &::-webkit-input-placeholder {
-    color: #aaa;
-  }
-  + label {
-    transform: translateY(-30px);
-  }
+	hr {
+		content: '';
+		display: block;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 2px;
+		border: none;
+		background: $prim-red;
+		font-size: 1px;
+		will-change: transform, visibility;
+		transition: all 200ms ease-out;
+		transform: scaleX(0);
+		visibility: hidden;
+		z-index: 10;
+	}
+	input:focus ~ hr {
+		transform: scaleX(1);
+		visibility: visible;
+	}
+
+	label {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		font-size: 120%;
+		color: $prim-red;
+		transform-origin: 0 -150%;
+		transition: transform 300ms ease;
+		pointer-events: none;
+	}
+	input:focus ~ label,
+	input:valid ~ label {
+		transform: scale(0.6);
+	}
 }
 
 .settings-title {
   font-size: 15px;
   text-align: center;
+  &:hover:first-letter {
+    color: $prim-red;
+  }
 }
 
 .back-button {
@@ -99,16 +116,18 @@
     .form-wrapper
       div(class="settings-title")
         h1 Settings
-        // i(class="material-icons") settings
-      span.input-wrapper
-        input(v-model="APIKey", class="inputty", id="state", type="text", placeholder="Liquid, solid, gaseous...")
-        label(for="state") APIkey
-      span.input-wrapper
-        input(v-model="username", class="inputty", id="planet", type="text", placeholder="Probably Earth")
-        label(for="planet") Username
-      span.input-wrapper
-        input(v-model="userkey", class="inputty", id="planet", type="text", placeholder="Probably Earth")
-        label(for="planet") Userkey
+      fieldset(class="material")
+        input(v-model="APIKey", type="text", placeholder="e.g. VYFIKA2D1FMHMOP7", required)
+        hr
+        label APIkey
+      fieldset(class="material")
+        input(v-model="username", type="text", placeholder="e.g. stormagddn123", required)
+        hr
+        label Username
+      fieldset(class="material")
+        input(v-model="userkey", type="text", placeholder="e.g. 841212", required)
+        hr
+        label Userkey
     router-link(class="back-button", to="/")
       i(class="material-icons") arrow_back
 </template>
