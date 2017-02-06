@@ -2,7 +2,7 @@
 
 const electron = require('electron')
 const path = require('path')
-const app = electron.app
+const {app, Menu} = require('electron')
 const BrowserWindow = electron.BrowserWindow
 
 let mainWindow
@@ -31,7 +31,7 @@ function createWindow () {
   })
 
   mainWindow.loadURL(config.url)
-
+  // mainWindow.openDevTools();
   if (process.env.NODE_ENV === 'development') {
     BrowserWindow.addDevToolsExtension(path.join(__dirname, '../node_modules/devtron'))
 
