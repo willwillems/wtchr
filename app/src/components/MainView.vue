@@ -89,12 +89,14 @@ body {
     .page-content
       //transition-group(name="top-enter", appear)
       // 'show' must be a string here because of pug but in vanilla HTML would not be one
+      spinner(:active="isActive")
       show-panel(v-for='show in searchedShows', :show='show', :key="show.id")
 </template>
 --------------------------------------------------------------------------------
 <script>
 import TorrentDropdown from './MainView/TorrentDropdown';
 import ShowPanel from './MainView/ShowPanel';
+import Spinner from './MainView/Spinner';
 
 export default {
   name: 'main',
@@ -107,11 +109,16 @@ export default {
   },
   components: {
     TorrentDropdown,
-    ShowPanel
+    ShowPanel,
+    Spinner
   },
   methods: {
-    classchange: function () {
-      this.isActive = !this.isActive;
+    toggleSpinner: function (bool) {
+      if (typeof bool === "undefined") {
+        this.isActive = !this.isActive;
+        return;
+      };
+      this.isActive = bool;
     }
   },
   computed: {
