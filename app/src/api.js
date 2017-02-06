@@ -174,7 +174,10 @@ export function proccesShowData (shows) {
   return _proccesShowData(shows);
 };
 
-export function _produceShowData () {
+var settings = {};
+export function _produceShowData (settingsArg) {
+  // OK I know this isn't very prety but I'm in a hurry bro
+  settings = settingsArg;
   getAuthKey();
   console.log('Activated produceShowData');
   return new Promise(function (resolve, reject) {
@@ -188,9 +191,6 @@ export function _produceShowData () {
   });
 };
 
-var settings = {};
-export function produceShowData (set) {
-  // OK I know this isn't very prety but I'm in a hurry bro
-  settings = set;
-  return _produceShowData();
+export function produceShowData (settingsArg) {
+  return _produceShowData(settingsArg);
 };
