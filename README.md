@@ -1,6 +1,6 @@
-![Alt text](http://i.imgur.com/w3CyfU6.jpg "WTCHR")
+![Alt text](http://i.imgur.com/qTVeST7.jpg)
 
-> Manage and download your shows.
+Manage and download your shows.
 
 ## Build Setup
 
