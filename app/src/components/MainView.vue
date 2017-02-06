@@ -102,7 +102,7 @@ export default {
   name: 'main',
   data () {
     return {
-      isActive: true,
+      isActive: false,
       showdata: [],
       searchQuery: ''
     };
