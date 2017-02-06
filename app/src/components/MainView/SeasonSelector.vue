@@ -59,8 +59,8 @@
           .episode-date {{selectedEpisode.firstAired}}
           .episode-name {{selectedEpisode.episodeName}}
       .episode(v-for="episode in episodes", :class="{ active: showpanelIsActive }", @click="$store.commit('setSelectedEpisode', {id: show.id, episode});")
-          .season-number S{{selectedEpisode.airedSeason}} E{{episode.airedEpisodeNumber}}
-          .episode-date {{selectedEpisode.firstAired}}
+          .season-number S{{episode.airedSeason}} E{{episode.airedEpisodeNumber}}
+          .episode-date {{episode.firstAired}}
           .episode-name {{episode.episodeName}}
 </template>
 --------------------------------------------------------------------------------
@@ -94,6 +94,13 @@ export default {
     },
     selectedEpisode () {
       return this.show.episodes.selectedEpisode;
+    }
+  },
+  watch: {
+    selectedEpisode: function (val) {
+      if (typeof val.id === "undefined") {
+        this.getEpisodes();
+      };
     }
   }
 };

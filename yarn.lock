@@ -2042,6 +2042,10 @@ electron-chromedriver@~1.4.0:
     electron-download "^3.1.0"
     extract-zip "^1.6.0"
 
+electron-default-menu@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/electron-default-menu/-/electron-default-menu-1.0.0.tgz#085d529c29ffbb44f9e584198d8822b19a9c9806"
+
 electron-devtools-installer@^1.1.4:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/electron-devtools-installer/-/electron-devtools-installer-1.1.5.tgz#12282327a4ab825d2267fc42bc5d3241b26b3559"
@@ -4238,6 +4242,10 @@ lodash.merge@^3.3.2:
     lodash.keysin "^3.0.0"
     lodash.toplainobject "^3.0.0"
 
+lodash.merge@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.0.tgz#69884ba144ac33fe699737a6086deffadd0f89c5"
+
 lodash.mergewith@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.0.tgz#150cf0a16791f5903b8891eab154609274bdea55"
@@ -4782,6 +4790,10 @@ object-keys@^1.0.6:
 object-keys@~0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-0.4.0.tgz#28a6aae7428dd2c3a92f3d95f21335dd204e0336"
+
+object-path@^0.11.2:
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/object-path/-/object-path-0.11.3.tgz#3e21a42ad07234d815429ae9e15c1c5f38050554"
 
 object.omit@^2.0.0:
   version "2.0.1"
@@ -6843,6 +6855,13 @@ vue-template-compiler:
 vue-template-es2015-compiler@^1.2.2:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.5.0.tgz#e4f672ab1718a3abf9171a080daefac31be117e1"
+
+vuex-persistedstate@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vuex-persistedstate/-/vuex-persistedstate-1.1.0.tgz#94f2e94a873f39fc716dea3129af45df8d4d6f78"
+  dependencies:
+    lodash.merge "^4.6.0"
+    object-path "^0.11.2"
 
 walker@~1.0.5:
   version "1.0.7"

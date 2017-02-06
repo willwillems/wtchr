@@ -115,18 +115,23 @@ export default {
   data () {
     return {
       torrentlist: [],
-      selected: {title: 'No torrents found', seeders: 0, leechers: 0, size: 'NaN'}
+      selected: {title: 'No torrents found', seeders: 0, leechers: 0, size: 'NaN'},
+      currentData: {}
     };
   },
   methods: {
-    getTorrents: function (query) {
-      getTorrents(query)
+    getTorrents: function (title, airedSeason, airedEpisodeNumber) {
+      if (typeof airedSeason === "undefined" || typeof airedEpisodeNumber === "undefined") {
+        return new Error("airedSeason or airedEpisodeNumber is undefined");
+      }
+      getTorrents(`${title} S${airedSeason}E${airedEpisodeNumber}`)
       .then(torrent => {
         if (torrent.torrentData[0] === undefined) {
-          throw new Error(`torrentData[0] was undefined with this query: ${query}`);
+          throw new Error(`torrentData[0] was undefined with these arguments: ${JSON.stringify(arguments)}`);
         };
         this.torrentlist = torrent.torrentData;
         this.selected = torrent.torrentData[0];
+        this.currentData = this.selectedEpisode;
       })
       .catch(e => {
         throw new Error(e);
@@ -143,7 +148,9 @@ export default {
   },
   watch: {
     selectedEpisode: function () {
-      this.getTorrents(`${this.show.title} S${this.selectedEpisode.airedSeason}E${this.selectedEpisode.airedEpisodeNumber}`);
+      if (this.selectedEpisode !== this.currentData) {
+        this.getTorrents(this.show.title, this.selectedEpisode.airedSeason, this.selectedEpisode.airedEpisodeNumber);
+      };
     }
   }
 };

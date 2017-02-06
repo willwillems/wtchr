@@ -83,12 +83,14 @@
     "axios": "^0.15.3",
     "axios-mock-adapter": "^1.7.1",
     "electron": "^1.4.15",
+    "electron-default-menu": "^1.0.0",
     "localforage": "^1.4.3",
     "node-sass": "^4.5.0",
     "pug": "^2.0.0-beta6",
     "sass-loader": "^4.1.1",
     "scrape-it": "^3.2.2",
     "vue-loader": "^10.1.2",
-    "vue-template-compiler": "^2.1.10"
+    "vue-template-compiler": "^2.1.10",
+    "vuex-persistedstate": "^1.1.0"
   }
 }

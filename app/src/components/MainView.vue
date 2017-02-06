@@ -84,8 +84,8 @@ body {
         i.material-icons add
         router-link(to="/foo") Delete show
       span
-        i.material-icons search
-        router-link(to="/foo") Add show
+        i.material-icons refresh
+        i(@click="$store.dispatch('getShowData')") Refresh
     .page-content
       //transition-group(name="top-enter", appear)
       // 'show' must be a string here because of pug but in vanilla HTML would not be one
