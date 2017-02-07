@@ -77,7 +77,7 @@ body {
   #main
     .menu-bar
       input(type="text", placeholder="Search", v-model="searchQuery")
-      span
+      span(@click="$store.commit('toggleSpinner')")
         i.material-icons face
         router-link(to="/login") login
       span(href="login")
@@ -89,7 +89,7 @@ body {
     .page-content
       //transition-group(name="top-enter", appear)
       // 'show' must be a string here because of pug but in vanilla HTML would not be one
-      spinner(:active="isActive")
+      spinner(:active="$store.state.appstate.spinnerActive")
       show-panel(v-for='show in searchedShows', :show='show', :key="show.id")
 </template>
 --------------------------------------------------------------------------------
@@ -102,7 +102,6 @@ export default {
   name: 'main',
   data () {
     return {
-      isActive: false,
       showdata: [],
       searchQuery: ''
     };
@@ -111,15 +110,6 @@ export default {
     TorrentDropdown,
     ShowPanel,
     Spinner
-  },
-  methods: {
-    toggleSpinner: function (bool) {
-      if (typeof bool === "undefined") {
-        this.isActive = !this.isActive;
-        return;
-      };
-      this.isActive = bool;
-    }
   },
   computed: {
     searchedShows: function () {
