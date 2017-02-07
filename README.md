@@ -4,19 +4,32 @@ Manage and download your shows using your TheTVDB account. This application does
 
 ![Alt text](http://i.imgur.com/e3Kr1kh.png)
 
-## Using WTCHR
+## 💻 Using WTCHR
 How to use: 
 - If you do not already have one, get an account with [TheTVDB](https://www.thetvdb.com) 
 - Get an API-key from TheTVDB [here](http://thetvdb.com/?tab=apiregister)
 - Fire up the application and fill in your login details in the login tab.
 
-## Technologies Used
+## 🔧 Technologies Used
 - Vue.js
 - Electron
 - LocalForage
 - Scrape-It
 
-## Build Setup
+## 🙌 Contributing
+Currently the project is still in its infancy phase, if you have ideas, suggestions or anything else do not hesitate to open an issue. Every form of help is more than welcome!
+
+But please do not file large Pull request with multiple file modifications out of the blue without any context.
+
+## 📝 TODO
+- [ ] Sort shows by last aired episode not currently selected
+- [ ] Improve the styling of the "refresh" and "login" button
+- [ ] Stop fetching data that will never change (background image, certain showinfo, etc.)
+- [ ] Design tutorial for first time using the application
+- [ ] Give user more feedback with error messages, console is currently needed if anything goes wrong
+- [ ] Write more tests
+
+## ⚙️ Build Setup
 
 ``` bash
 # install dependencies
