@@ -1,1 +1,0 @@
-- Sort shows by last aired episode not currently selected
