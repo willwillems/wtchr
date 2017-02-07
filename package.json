@@ -16,7 +16,7 @@
     "test": "jest",
     "vue:route": "node tasks/vue/route.js",
     "vuex:module": "node tasks/vuex/module.js",
-    "postinstall": "npm run lint:fix && cd app && npm install"
+    "postinstall": "yarn run lint:fix && cd app && yarn"
   },
   "author": "Greg Holguin <simulatedgreg@gmail.com>",
   "license": "MIT",
