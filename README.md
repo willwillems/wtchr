@@ -1,6 +1,20 @@
-![Alt text](http://i.imgur.com/qTVeST7.jpg)
+![Alt text](http://i.imgur.com/ZSgdWfm.jpg)
 
-Manage and download your shows.
+Manage and download your shows using your TheTVDB account. This application does not collect any of your data, has no connection to any servers except for the TheTVDB requests when accesing it's API and the scraping of ThePirateBay. This application is very privacy focused and works completely stand-alone. 
+
+![Alt text](http://i.imgur.com/e3Kr1kh.png)
+
+## Using WTCHR
+How to use: 
+- If you do not already have one, get an account with [TheTVDB](https://www.thetvdb.com) 
+- Get an API-key from TheTVDB [here](http://thetvdb.com/?tab=apiregister)
+- Fire up the application and fill in your login details in the login tab.
+
+## Technologies Used
+- Vue.js
+- Electron
+- LocalForage
+- Scrape-It
 
 ## Build Setup
 
