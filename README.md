@@ -11,10 +11,10 @@ How to use:
 - Fire up the application and fill in your login details in the login tab.
 
 ## 🔧 Technologies Used
-- Vue.js
-- Electron
-- LocalForage
-- Scrape-It
+- [Vue.js](https://github.com/vuejs/vue)
+- [Electron](https://github.com/electron/electron)
+- [LocalForage](https://github.com/localForage/localForage)
+- [Scrape-It](https://github.com/IonicaBizau/scrape-it)
 
 ## 🙌 Contributing
 Currently the project is still in its infancy phase, if you have ideas, suggestions or anything else do not hesitate to open an issue. Every form of help is more than welcome!
