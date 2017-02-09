@@ -76,9 +76,8 @@ export default {
       activeSeason: ''
     };
   },
-  created: function () { // this below here is temporairy , i think this attribute is normaly empty now
+  created: function () {
     this.activeSeason = Math.max.apply(Math, this.show.seasons); // Math.max cant be used because not every element in the array can be converted into a number (observer el)
-    this.getEpisodes();
   },
   methods: {
     getEpisodes: function () {
@@ -98,7 +97,7 @@ export default {
   },
   watch: {
     selectedEpisode: function (val) {
-      if (typeof val.id === "undefined") {
+      if (typeof val === "undefined" || !val.hasOwnProperty('id')) {
         this.getEpisodes();
       };
     }

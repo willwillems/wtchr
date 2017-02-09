@@ -10,7 +10,15 @@ const state = {
 const getters = {
   sortedShows: state => {
     return state.shows.slice().sort((a, b) => {
-      return new Date(b.episodes.selectedEpisode.firstAired) - new Date(a.episodes.selectedEpisode.firstAired);
+      try {
+        return new Date(b.episodes.selectedEpisode.firstAired) - new Date(a.episodes.selectedEpisode.firstAired);
+      } catch (e) {
+        if (e instanceof TypeError) {
+          return state.shows;
+        } else {
+          throw e;
+        }
+      }
     });
   }
 };
