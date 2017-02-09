@@ -35,9 +35,10 @@
     created: function () {
       // This can't be in the mainview component because then it constantly
       // updates while navigating between login and main
-      this.$store.dispatch('getLocalData').then(() => {
-        this.$store.dispatch('getShowData');
-      });
+      this.$store.dispatch('activateSpinner');
+      this.$store.dispatch('getLocalData')
+        .then(() => this.$store.dispatch('getShowData'))
+        .then(() => this.$store.dispatch('deactivateSpinner'));
     }
   };
 </script>
