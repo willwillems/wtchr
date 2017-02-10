@@ -1,6 +1,6 @@
 import Vue from 'vue'; // required for Vue.set
 
-import { produceShowData, getEpisodes } from '../../api';
+import { produceShowData, getEpisodes, getFavoriteShowIDs, setCredentials } from '../../api';
 
 // We'll later restructure this so instead of a list and object its one object like this: {123143: {title: "homeland" ---}, ----}
 const state = {
@@ -35,12 +35,32 @@ const mutations = {
   },
   setSelectedEpisode (state, {id, episode}) {
     state.shows.find(show => show.id === id).episodes.selectedEpisode = episode;
+  },
+  deleteShowFromShows (state, id) {
+    state.shows = state.shows.filter(show => {
+      return show.id !== id;
+    });
   }
 };
 
 const actions = {
-  async getShowData ({ commit, rootState }) {
-    commit('setShows', await produceShowData(rootState.settings));
+  getShowData ({ commit, dispatch, state, rootState }) {
+    setCredentials(rootState.settings);
+    getFavoriteShowIDs()
+      .then(ids => {
+        // return only the id's of the shows that are not already present
+        return ids.filter(id => {
+          return (typeof state.shows.find(show => show.id === parseInt(id)) === 'undefined');
+        });
+      })
+      .then(produceShowData)
+      .then(shows => {
+        commit('setShows', [...state.shows, ...shows]);
+        shows.forEach(show => dispatch('getEpisodes', {
+          id: show.id,
+          season: Math.max.apply(Math, show.seasons)
+        }));
+      });
   },
   getEpisodes ({ commit }, { id, season }) {
     getEpisodes(id, season)

@@ -175,22 +175,21 @@ export function proccesShowData (shows) {
 };
 
 var settings = {};
-export function _produceShowData (settingsArg) {
+export function setCredentials (settingsArg) {
   // OK I know this isn't very prety but I'm in a hurry bro
   settings = settingsArg;
+};
+
+export function _produceShowData (showIDArray) {
   getAuthKey();
-  console.log('Activated produceShowData');
   return new Promise(function (resolve, reject) {
-    getFavoriteShowIDs()
-      .then(showids => {
-        Promise.all(showids.map(getShowInfo))
-          .then(proccesShowData)
-          .then(resolve)
-          .catch(e => reject(Error(e)));
-      });
+    Promise.all(showIDArray.map(getShowInfo))
+      .then(proccesShowData)
+      .then(resolve)
+      .catch(e => reject(Error(e)));
   });
 };
 
-export function produceShowData (settingsArg) {
-  return _produceShowData(settingsArg);
+export function produceShowData (showIDArray) {
+  return _produceShowData(showIDArray);
 };
