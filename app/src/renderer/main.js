@@ -8,7 +8,7 @@ import routes from './routes';
 
 // Disable zooming
 import { webFrame } from 'electron';
-webFrame.setZoomLevelLimits(1, 1);
+webFrame.setVisualZoomLevelLimits(1, 1);
 
 Vue.use(Electron);
 Vue.use(Resource);

@@ -2,7 +2,7 @@ import localforage from 'localforage';
 // This module tracks certain mutations so they can be re-aplied when the app
 // is restarted (e.g. so you dont have to input your info again and again)
 var settingsStorage = localforage.createInstance({
-  name: "settings"
+  name: 'settings'
 });
 
 function localStoragePlugin (mutationsToTrack) {
@@ -16,7 +16,7 @@ function localStoragePlugin (mutationsToTrack) {
 };
 
 export default localStoragePlugin([
-  "setTVDBAPIKey",
-  "setTVDBUsername",
-  "setTVDBUserkey"
+  'setTVDBAPIKey',
+  'setTVDBUsername',
+  'setTVDBUserkey'
 ]);

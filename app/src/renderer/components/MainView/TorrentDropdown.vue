@@ -121,8 +121,8 @@ export default {
   },
   methods: {
     getTorrents: function (title, airedSeason, airedEpisodeNumber) {
-      if (typeof airedSeason === "undefined" || typeof airedEpisodeNumber === "undefined") {
-        return new Error("airedSeason or airedEpisodeNumber is undefined");
+      if (typeof airedSeason === 'undefined' || typeof airedEpisodeNumber === 'undefined') {
+        return new Error('airedSeason or airedEpisodeNumber is undefined');
       }
       getTorrents(`${title} S${airedSeason}E${airedEpisodeNumber}`)
       .then(torrent => {

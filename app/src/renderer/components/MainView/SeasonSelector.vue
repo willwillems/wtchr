@@ -97,7 +97,7 @@ export default {
   },
   watch: {
     selectedEpisode: function (val) {
-      if (typeof val === "undefined" || !val.hasOwnProperty('id')) {
+      if (typeof val === 'undefined' || !val.hasOwnProperty('id')) {
         this.getEpisodes();
       };
     }
