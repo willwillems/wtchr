@@ -91,7 +91,7 @@ a {
       <span class="size">{{selected.size}}</span>
     </div>
     <ul>
-      <li v-for="torrent in torrentlist">
+      <li v-for="torrent in torrentlist" :key=torrent.magnetlink>
         <div class="listitem" @click="downloadTorrent(torrent.magnetlink)">
           <div class="title">{{torrent.title}}</div>
           <span class="leechers">L:{{torrent.leechers}}</span>
@@ -119,18 +119,28 @@ export default {
       currentData: {}
     };
   },
+  created: function () {
+    try {
+      this.getTorrents(this.show.title, this.selectedEpisode.airedSeason, this.selectedEpisode.airedEpisodeNumber);
+    } catch (e) {
+      console.log(e);
+    }
+  },
   methods: {
     getTorrents: function (title, airedSeason, airedEpisodeNumber) {
       if (typeof airedSeason === 'undefined' || typeof airedEpisodeNumber === 'undefined') {
         return new Error('airedSeason or airedEpisodeNumber is undefined');
       }
       getTorrents(`${title} S${airedSeason}E${airedEpisodeNumber}`)
-      .then(torrent => {
-        if (torrent.torrentData[0] === undefined) {
-          throw new Error(`torrentData[0] was undefined with these arguments: ${JSON.stringify(arguments)}`);
+      .then(torrentData => {
+        if (torrentData[0] === undefined) {
+          this.torrentlist = [];
+          this.selected = {title: 'No torrents found', seeders: 0, leechers: 0, size: 'NaN'};
+        } else {
+          console.log(torrentData);
+          this.torrentlist = torrentData;
+          this.selected = torrentData[0];
         };
-        this.torrentlist = torrent.torrentData;
-        this.selected = torrent.torrentData[0];
         this.currentData = this.selectedEpisode;
       })
       .catch(e => {
@@ -149,7 +159,11 @@ export default {
   watch: {
     selectedEpisode: function (val) {
       if (val !== this.currentData) {
-        // this.getTorrents(this.show.title, val.airedSeason, val.airedEpisodeNumber);
+        try {
+          this.getTorrents(this.show.title, val.airedSeason, val.airedEpisodeNumber);
+        } catch (e) {
+          console.log(e);
+        }
       };
     }
   }
