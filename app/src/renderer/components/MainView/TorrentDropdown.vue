@@ -137,7 +137,6 @@ export default {
           this.torrentlist = [];
           this.selected = {title: 'No torrents found', seeders: 0, leechers: 0, size: 'NaN'};
         } else {
-          console.log(torrentData);
           this.torrentlist = torrentData;
           this.selected = torrentData[0];
         };
