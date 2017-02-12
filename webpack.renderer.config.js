@@ -21,7 +21,7 @@ let rendererConfig = {
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
+          fallbackLoader: 'style-loader',
           loader: 'css-loader'
         })
       },
@@ -101,25 +101,26 @@ let rendererConfig = {
   target: 'electron-renderer'
 }
 
-if (process.env.NODE_ENV !== 'production') {
-  /**
-   * Apply ESLint
-   */
-  if (settings.eslint) {
-    rendererConfig.module.rules.push(
-      {
-        test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        exclude: /node_modules/,
-        options: { formatter: require('eslint-friendly-formatter') }
-      }
-    )
-  }
-}
 
 /**
  * Adjust rednererConfig for production settings
  */
+if (process.env.NODE_ENV === 'production') {
+  rendererConfig.devtool = ''
+
+  rendererConfig.plugins.push(
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"'
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  )
+}
 
 module.exports = rendererConfig

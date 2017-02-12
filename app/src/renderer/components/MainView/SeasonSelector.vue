@@ -77,9 +77,17 @@ export default {
     };
   },
   created: function () {
-    this.activeSeason = Math.max.apply(Math, this.show.seasons); // Math.max cant be used because not every element in the array can be converted into a number (observer el)
+    this.setActiveSeason();
   },
   methods: {
+    setActiveSeason: function(season) {
+      // Math.max cant be used because not every element in the array can be converted into a number (observer el)
+      this.activeSeason = Math.max.apply(Math, this.show.seasons);
+      // If there are no episodes of the current active season yet, fetch them
+      if (this.episodes === null) {
+        this.getEpisodes();
+      };
+    },
     getEpisodes: function () {
       this.$store.dispatch('getEpisodes', {
         id: this.show.id,
@@ -89,16 +97,38 @@ export default {
   },
   computed: {
     episodes () {
+      // To prevent vue from getting properties from undefined in the template
+      if (typeof this.show.episodes.seasons[this.activeSeason] === 'undefined') {
+        return {};
+      };
       return this.show.episodes.seasons[this.activeSeason];
     },
     selectedEpisode () {
+      // To prevent vue from getting properties from undefined in the template
+      if (typeof this.show.episodes.selectedEpisode === 'undefined') {
+        return {};
+      };
       return this.show.episodes.selectedEpisode;
     }
   },
   watch: {
+    episodes: function (val) {
+      if (val.length === 0) {
+        // If there are no episodes in the season take the previous one.
+        this.activeSeason = (this.activeSeason -1);
+      };
+      if (val === {} || val === [] || (typeof val === 'undefined')) {
+        this.getEpisodes();
+      }
+    },
     selectedEpisode: function (val) {
       if (typeof val === 'undefined' || !val.hasOwnProperty('id')) {
         this.getEpisodes();
+      };
+    },
+    activeSeason: function (val) {
+      if (typeof val !== 'number') {
+        this.setActiveSeason();
       };
     }
   }

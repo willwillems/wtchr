@@ -147,9 +147,9 @@ export default {
     }
   },
   watch: {
-    selectedEpisode: function () {
-      if (this.selectedEpisode !== this.currentData) {
-        this.getTorrents(this.show.title, this.selectedEpisode.airedSeason, this.selectedEpisode.airedEpisodeNumber);
+    selectedEpisode: function (val) {
+      if (val !== this.currentData) {
+        // this.getTorrents(this.show.title, val.airedSeason, val.airedEpisodeNumber);
       };
     }
   }

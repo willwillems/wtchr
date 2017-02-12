@@ -94,7 +94,6 @@ body {
 </template>
 --------------------------------------------------------------------------------
 <script>
-import TorrentDropdown from './MainView/TorrentDropdown';
 import ShowPanel from './MainView/ShowPanel';
 import Spinner from './MainView/Spinner';
 
@@ -107,7 +106,6 @@ export default {
     };
   },
   components: {
-    TorrentDropdown,
     ShowPanel,
     Spinner
   },

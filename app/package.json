@@ -1,13 +1,12 @@
 {
   "name": "wtchr",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "An electron-vue project",
   "main": "./dist/main.js",
   "dependencies": {
-    "debug": "^2.6.1",
     "electron": "^1.4.15",
     "localforage": "^1.4.3",
-    "scrape-it": "^3.2.2",
+    "scrape-it": "2.0.0",
     "vue": "^2.1.10",
     "vue-electron": "^1.0.6",
     "vue-resource": "^1.0.3",
@@ -16,5 +15,5 @@
     "vuex-persistedstate": "^1.1.0"
   },
   "devDependencies": {},
-  "author": "NickolasBoyer"
+  "author": "NickolasBoyer <rut.willems@gmail.com>"
 }

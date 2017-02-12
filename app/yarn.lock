@@ -48,13 +48,6 @@ assert-plus@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/assert-plus/-/assert-plus-1.0.0.tgz#f12e0f3c5d77b0b1cdd9146942e4e96c1e4dd525"
 
-assured@^1.0.0:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/assured/-/assured-1.0.4.tgz#11477c61d7c4722593ddecb7d57b0a8e9f063ec0"
-  dependencies:
-    noop6 "^1.0.1"
-    sliced "^1.0.1"
-
 ast-types@0.8.15:
   version "0.8.15"
   resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.8.15.tgz#8eef0827f04dff0ec8857ba925abe3fea6194e52"
@@ -245,7 +238,7 @@ debug@0.7.4:
   version "0.7.4"
   resolved "https://registry.yarnpkg.com/debug/-/debug-0.7.4.tgz#06e1ea8082c2cb14e39806e22e2f6f757f92af39"
 
-debug@^2.1.3, debug@^2.2.0, debug@^2.6.1:
+debug@^2.1.3, debug@^2.2.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.1.tgz#79855090ba2c4e3115cc7d8769491d58f0491351"
   dependencies:
@@ -280,7 +273,11 @@ dom-serializer@0, dom-serializer@~0.1.0:
     domelementtype "~1.1.1"
     entities "~1.1.1"
 
-domelementtype@1, domelementtype@~1.1.1:
+domelementtype@1:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-1.3.0.tgz#b17aed82e8ab59e52dd9c19b1756e0fc187204c2"
+
+domelementtype@~1.1.1:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-1.1.3.tgz#bd28773e2642881aec51544924299c5cd822185b"
 
@@ -1165,12 +1162,10 @@ sax@^1.1.4:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.2.tgz#fd8631a23bc7826bef5d871bdb87378c95647828"
 
-scrape-it@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/scrape-it/-/scrape-it-3.2.2.tgz#46c5a8659e69fc98b35f6f131921b71303e0b1ad"
+scrape-it@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/scrape-it/-/scrape-it-2.0.0.tgz#ae6cf37e3494e3e6620a99dc01fb51cd48bef9e4"
   dependencies:
-    assured "^1.0.0"
-    cheerio "^0.20.0"
     cheerio-req "^1.0.0"
     err "^2.1.1"
     is-empty-obj "^1.0.3"
@@ -1191,10 +1186,6 @@ single-line-log@^1.1.2:
   resolved "https://registry.yarnpkg.com/single-line-log/-/single-line-log-1.1.2.tgz#c2f83f273a3e1a16edb0995661da0ed5ef033364"
   dependencies:
     string-width "^1.0.1"
-
-sliced@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/sliced/-/sliced-1.0.1.tgz#0b3a662b5d04c3177b1926bea82b03f837a2ef41"
 
 sntp@1.x.x:
   version "1.0.9"
