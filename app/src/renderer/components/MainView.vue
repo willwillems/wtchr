@@ -85,6 +85,22 @@ body {
   width: 100%;
 }
 
+// When the list rearranges animate the movement
+.show-list-move {
+  transition: transform 1s;
+}
+.show-list-enter-active, .show-list-leave-active {
+  transition: all 1s;
+}
+// Fade in/out when a new list entry is added/removed
+.show-list-enter, .show-list-leave-to {
+  opacity: 0;
+}
+// Swipe show to left when removing
+.show-list-leave-to {
+  transform: translateX(-100%);
+}
+
 // transistion
 .top-enter-enter-active, .top-enter-leave-active {
     transition: opacity 1.8s;
@@ -98,7 +114,7 @@ body {
 --------------------------------------------------------------------------------
 <template lang="pug">
   #main
-    .menu-bar
+    .menu-bar(@click="$store.commit('deleteShowFromShows', 247808)")
       input(type="text", placeholder="Search", v-model="searchQuery")
       span.menu-button(@click="$router.push('/login')")
         i.material-icons.login perm_identity
@@ -110,10 +126,10 @@ body {
         i.material-icons.refresh refresh
         .menu-text Refresh
     .page-content
-      //transition-group(name="top-enter", appear)
-      // 'show' must be a string here because of pug but in vanilla HTML would not be one
       spinner(:active="$store.state.appstate.spinnerActive")
-      show-panel(v-for='show in searchedShows', :show='show', :key="show.id")
+      transition-group(name="show-list")
+        // 'show' must be a string here because of pug but in vanilla HTML would not be one
+        show-panel(v-for='show in searchedShows', :show='show', :key="show.id")
 </template>
 --------------------------------------------------------------------------------
 <script>
