@@ -82,25 +82,20 @@ a {
 }
 </style>
 --------------------------------------------------------------------------------
-<template>
-  <div class="dropdown" :style={width}>
-    <div class="listitem" @click="downloadTorrent(selected.magnetlink)">
-      <div class="title">{{selected.title}}</div>
-      <span class="leechers">L:{{selected.leechers}}</span>
-      <span class="seeders">S:{{selected.seeders}}</span>
-      <span class="size">{{selected.size}}</span>
-    </div>
-    <ul>
-      <li v-for="torrent in torrentlist" :key=torrent.magnetlink>
-        <div class="listitem" @click="downloadTorrent(torrent.magnetlink)">
-          <div class="title">{{torrent.title}}</div>
-          <span class="leechers">L:{{torrent.leechers}}</span>
-          <span class="seeders">S:{{torrent.seeders}}</span>
-          <span class="size">{{torrent.size}}</span>
-        </div>
-      </li>
-    </ul>
-  </div>
+<template lang="pug">
+  .dropdown(:style="{width}")
+    .listitem(@click="downloadTorrent(selected.magnetlink)")
+      .title {{selected.title}}
+      .leechers L:{{selected.leechers}}
+      .seeders S:{{selected.seeders}}
+      .size {{selected.size}}
+    ul
+      li(v-for="torrent in torrentlist")
+        .listitem(@click="downloadTorrent(torrent.magnetlink)")
+          .title {{torrent.title}}
+          .leechers L:{{torrent.leechers}}
+          .seeders S:{{torrent.seeders}}
+          .size {{torrent.size}}
 </template>
 --------------------------------------------------------------------------------
 <script>
@@ -147,7 +142,9 @@ export default {
       });
     },
     downloadTorrent: function (arg) {
-      window.location = arg;
+      if (arg !== 'undefined') {
+        window.location = arg;
+      }
     }
   },
   computed: {
