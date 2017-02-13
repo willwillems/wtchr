@@ -1,8 +1,8 @@
-import cheerio from 'cheerio'
+import cheerio from 'cheerio';
 
 function getTorrents (show) {
   return fetch(`https://thepiratebay.org/search/${show}/0/99/0`)
-    .then(function(res) {
+    .then(function (res) {
       return res.text();
     })
     .then(html => {
@@ -10,13 +10,13 @@ function getTorrents (show) {
       const listElements = $("tr");
       const torrentList = Object.keys(listElements)
         .map(key => listElements[key]) // convert object to array
-        .filter(function (el, i) {
+        .filter(function (el) {
           try {
             return el.children[1].name === "td";
           } catch (e) {
-            return false
+            return false;
           }
-        })
+        });
       // If the list has one or no entries there are no torrents
       if (torrentList.length <= 1) {
         return [];
@@ -33,7 +33,7 @@ function getTorrents (show) {
           }];
         } catch (e) {
           return result;
-        };
+        }
       });
     })
     .catch(e => {

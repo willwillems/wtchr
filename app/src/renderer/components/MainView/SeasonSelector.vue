@@ -80,7 +80,7 @@ export default {
     this.setActiveSeason();
   },
   methods: {
-    setActiveSeason: function(season) {
+    setActiveSeason: function () {
       // Math.max cant be used because not every element in the array can be converted into a number (observer el)
       this.activeSeason = Math.max.apply(Math, this.show.seasons);
       // If there are no episodes of the current active season yet, fetch them
@@ -115,7 +115,7 @@ export default {
     episodes: function (val) {
       if (val.length === 0) {
         // If there are no episodes in the season take the previous one.
-        this.activeSeason = (this.activeSeason -1);
+        this.activeSeason = (this.activeSeason - 1);
       };
       if (val === {} || val === [] || (typeof val === 'undefined')) {
         this.getEpisodes();
