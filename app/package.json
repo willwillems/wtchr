@@ -1,9 +1,10 @@
 {
   "name": "wtchr",
-  "version": "0.0.0",
-  "description": "An electron-vue project",
+  "version": "0.1.0",
+  "description": "Manage and download your shows.",
   "main": "./dist/main.js",
   "dependencies": {
+    "cheerio": "^0.22.0",
     "electron": "^1.4.15",
     "localforage": "^1.4.3",
     "scrape-it": "2.0.0",
