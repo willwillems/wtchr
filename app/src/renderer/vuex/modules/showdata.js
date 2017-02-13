@@ -62,35 +62,36 @@ const actions = {
             season: Math.max.apply(Math, show.seasons)
           }));
         })
-        .then(() => resolve());
+        .then(resolve);
     });
   },
   getEpisodes ({ commit }, { id, season }) {
-    getEpisodes(id, season)
-       .then(function (response) {
-         // console.log('getEpisodes response: showid:', id, 'season:', season, 'data:', response);
-         const list = response
-                         .filter((eps) => new Date(eps.firstAired).valueOf() < new Date().valueOf())
-                         .map((eps) => {
-                           // convert episode nr's to strings and fixed lenght of two
-                           eps.airedEpisodeNumber = eps.airedEpisodeNumber < 10 ? '0' + eps.airedEpisodeNumber : String(eps.airedEpisodeNumber);
-                           eps.airedSeason = eps.airedSeason < 10 ? '0' + String(eps.airedSeason) : String(eps.airedSeason);
-                           return eps;
-                         });
-         list.reverse(); // So the list is ordered most recent -> old
-         commit('setEpisodes', {
-           id,
-           season,
-           list
-         });
-         commit('setSelectedEpisode', {
-           id,
-           episode: list[0]
-         });
-       })
-       .catch(function (error) {
-         console.log(error, 'error');
-       });
+    return new Promise(function(resolve, reject) {
+      getEpisodes(id, season)
+        .then(function (response) {
+          // console.log('getEpisodes response: showid:', id, 'season:', season, 'data:', response);
+          const list = response
+            .filter((eps) => new Date(eps.firstAired).valueOf() < new Date().valueOf())
+            .map((eps) => {
+              // convert episode nr's to strings and fixed lenght of two
+              eps.airedEpisodeNumber = eps.airedEpisodeNumber < 10 ? '0' + eps.airedEpisodeNumber : String(eps.airedEpisodeNumber);
+              eps.airedSeason = eps.airedSeason < 10 ? '0' + String(eps.airedSeason) : String(eps.airedSeason);
+              return eps;
+            });
+          list.reverse(); // So the list is ordered most recent -> old
+          commit('setEpisodes', {
+            id,
+            season,
+            list
+          });
+          commit('setSelectedEpisode', {
+            id,
+            episode: list[0]
+          });
+        })
+        .then(resolve)
+        .catch(reject);
+    });
   }
 };
 
