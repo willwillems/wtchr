@@ -1,5 +1,7 @@
 ![Alt text](http://i.imgur.com/ZSgdWfm.jpg)
 
+[![Build Status](https://travis-ci.org/NickolasBoyer/wtchr.svg?branch=master)](https://travis-ci.org/NickolasBoyer/wtchr)
+
 Manage and download your shows using your TheTVDB account. This application does not collect any of your data, has no connection to any servers except for the TheTVDB requests when accessing its API and the scraping of ThePirateBay. This application is very privacy focused and works completely stand-alone.
 
 ![Alt text](http://i.imgur.com/e3Kr1kh.png)
