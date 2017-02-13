@@ -24,7 +24,7 @@ export function checkKey () {
   return _checkKey(keyIsValid, renewKey);
 };
 
-export function _getAuthKey (fetch) {
+export function _getAuthKey (fetch, settings) {
   return new Promise(function (resolve, reject) {
     checkKey();
     fetch("https://api.thetvdb.com/login", {
@@ -46,7 +46,7 @@ export function _getAuthKey (fetch) {
 };
 
 export function getAuthKey () {
-  return _getAuthKey(fetch);
+  return _getAuthKey(fetch, settings);
 };
 
 export function _getFromTVDB (fetch, getAuthKey, path) {
