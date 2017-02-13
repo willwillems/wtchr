@@ -97,9 +97,9 @@ body {
   opacity: 0;
 }
 // Swipe show to left when removing
-.show-list-leave-to {
-  transform: translateX(-100%);
-}
+// .show-list-leave-to {
+//   transform: translateX(-100%);
+// }
 
 // transistion
 .top-enter-enter-active, .top-enter-leave-active {
