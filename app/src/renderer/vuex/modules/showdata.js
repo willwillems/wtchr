@@ -45,22 +45,25 @@ const mutations = {
 
 const actions = {
   getShowData ({ commit, dispatch, state, rootState }) {
-    setCredentials(rootState.settings);
-    getFavoriteShowIDs()
-      .then(ids => {
-        // return only the id's of the shows that are not already present
-        return ids.filter(id => {
-          return (typeof state.shows.find(show => show.id === parseInt(id)) === 'undefined');
-        });
-      })
-      .then(produceShowData)
-      .then(shows => {
-        commit('setShows', [...state.shows, ...shows]);
-        shows.forEach(show => dispatch('getEpisodes', {
-          id: show.id,
-          season: Math.max.apply(Math, show.seasons)
-        }));
-      });
+    return new Promise(function(resolve, reject) {
+      setCredentials(rootState.settings);
+      getFavoriteShowIDs()
+        .then(ids => {
+          // return only the id's of the shows that are not already present
+          return ids.filter(id => {
+            return (typeof state.shows.find(show => show.id === parseInt(id)) === 'undefined');
+          });
+        })
+        .then(produceShowData)
+        .then(shows => {
+          commit('setShows', [...state.shows, ...shows]);
+          shows.forEach(show => dispatch('getEpisodes', {
+            id: show.id,
+            season: Math.max.apply(Math, show.seasons)
+          }));
+        })
+        .then(() => resolve());
+    });
   },
   getEpisodes ({ commit }, { id, season }) {
     getEpisodes(id, season)
