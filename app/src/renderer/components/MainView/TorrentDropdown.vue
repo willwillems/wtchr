@@ -82,25 +82,20 @@ a {
 }
 </style>
 --------------------------------------------------------------------------------
-<template>
-  <div class="dropdown" :style={width}>
-    <div class="listitem" @click="downloadTorrent(selected.magnetlink)">
-      <div class="title">{{selected.title}}</div>
-      <span class="leechers">L:{{selected.leechers}}</span>
-      <span class="seeders">S:{{selected.seeders}}</span>
-      <span class="size">{{selected.size}}</span>
-    </div>
-    <ul>
-      <li v-for="torrent in torrentlist">
-        <div class="listitem" @click="downloadTorrent(torrent.magnetlink)">
-          <div class="title">{{torrent.title}}</div>
-          <span class="leechers">L:{{torrent.leechers}}</span>
-          <span class="seeders">S:{{torrent.seeders}}</span>
-          <span class="size">{{torrent.size}}</span>
-        </div>
-      </li>
-    </ul>
-  </div>
+<template lang="pug">
+  .dropdown(:style="{width}")
+    .listitem(@click="downloadTorrent(selected.magnetlink)")
+      .title {{selected.title}}
+      .leechers L:{{selected.leechers}}
+      .seeders S:{{selected.seeders}}
+      .size {{selected.size}}
+    ul
+      li(v-for="torrent in torrentlist")
+        .listitem(@click="downloadTorrent(torrent.magnetlink)")
+          .title {{torrent.title}}
+          .leechers L:{{torrent.leechers}}
+          .seeders S:{{torrent.seeders}}
+          .size {{torrent.size}}
 </template>
 --------------------------------------------------------------------------------
 <script>
@@ -119,18 +114,27 @@ export default {
       currentData: {}
     };
   },
+  created: function () {
+    try {
+      this.getTorrents(this.show.title, this.selectedEpisode.airedSeason, this.selectedEpisode.airedEpisodeNumber);
+    } catch (e) {
+      console.log(e);
+    }
+  },
   methods: {
     getTorrents: function (title, airedSeason, airedEpisodeNumber) {
-      if (typeof airedSeason === "undefined" || typeof airedEpisodeNumber === "undefined") {
-        return new Error("airedSeason or airedEpisodeNumber is undefined");
+      if (typeof airedSeason === 'undefined' || typeof airedEpisodeNumber === 'undefined') {
+        return new Error('airedSeason or airedEpisodeNumber is undefined');
       }
       getTorrents(`${title} S${airedSeason}E${airedEpisodeNumber}`)
-      .then(torrent => {
-        if (torrent.torrentData[0] === undefined) {
-          throw new Error(`torrentData[0] was undefined with these arguments: ${JSON.stringify(arguments)}`);
+      .then(torrentData => {
+        if (torrentData[0] === undefined) {
+          this.torrentlist = [];
+          this.selected = {title: 'No torrents found', seeders: 0, leechers: 0, size: 'NaN'};
+        } else {
+          this.torrentlist = torrentData;
+          this.selected = torrentData[0];
         };
-        this.torrentlist = torrent.torrentData;
-        this.selected = torrent.torrentData[0];
         this.currentData = this.selectedEpisode;
       })
       .catch(e => {
@@ -138,7 +142,9 @@ export default {
       });
     },
     downloadTorrent: function (arg) {
-      window.location = arg;
+      if (arg !== 'undefined') {
+        window.location = arg;
+      }
     }
   },
   computed: {
@@ -147,9 +153,13 @@ export default {
     }
   },
   watch: {
-    selectedEpisode: function () {
-      if (this.selectedEpisode !== this.currentData) {
-        this.getTorrents(this.show.title, this.selectedEpisode.airedSeason, this.selectedEpisode.airedEpisodeNumber);
+    selectedEpisode: function (val) {
+      if (val !== this.currentData) {
+        try {
+          this.getTorrents(this.show.title, val.airedSeason, val.airedEpisodeNumber);
+        } catch (e) {
+          console.log(e);
+        }
       };
     }
   }

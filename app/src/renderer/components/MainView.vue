@@ -28,7 +28,6 @@ body {
   color: rgb(68, 68, 68);
   font-size: 2em;
   line-height: 5rem;
-  padding: 0px 20px;
   position: fixed;
   z-index: 3;
   text-align: left;
@@ -42,17 +41,41 @@ body {
     font-size: 1em;
     border-bottom: 1px solid #CCC;
   }
-  span {
-    font-size: 0.4em;
-    padding: 0px 80px;
-    line-height: 3rem; // same as menu bar to centre
+  .menu-button {
+    height: 100%;
     vertical-align: middle;
     float: right;
-    &:hover {
-      background-color: lightgray;
+    padding: 0px 10px;
+    &:first-of-type {
+      padding-right: 20px;
     }
-    i {
-      vertical-align: middle;
+    .material-icons {
+      padding: 7px;
+      color: darkgray;
+      border-width: 2px;
+      border-color: darkgray;
+      border-style: solid;
+      border-radius: 50%;
+      transition: all .4s ease-in-out;
+    }
+
+    &:hover {
+      .material-icons {
+        color: $prim-red;
+        &.refresh {
+          transform: rotate(360deg) scale(1.1);
+        }
+        &.login {
+          transform: scale(1.1);
+        }
+      }
+      // .menu-text {
+      //   display: block;
+      // }
+    }
+    .menu-text {
+      font-size: 8px;
+      display: none;
     }
   }
 }
@@ -61,6 +84,22 @@ body {
   padding-top: 6em; // size of menu bar plus 1 em
   width: 100%;
 }
+
+// When the list rearranges animate the movement
+.show-list-move {
+  transition: transform 1s;
+}
+.show-list-enter-active, .show-list-leave-active {
+  transition: all 1s;
+}
+// Fade in/out when a new list entry is added/removed
+.show-list-enter, .show-list-leave-to {
+  opacity: 0;
+}
+// Swipe show to left when removing
+// .show-list-leave-to {
+//   transform: translateX(-100%);
+// }
 
 // transistion
 .top-enter-enter-active, .top-enter-leave-active {
@@ -75,26 +114,25 @@ body {
 --------------------------------------------------------------------------------
 <template lang="pug">
   #main
-    .menu-bar
+    .menu-bar(@click="$store.commit('deleteShowFromShows', 247808)")
       input(type="text", placeholder="Search", v-model="searchQuery")
-      span(@click="$store.commit('toggleSpinner')")
-        i.material-icons face
-        router-link(to="/login") login
-      span(href="login")
+      span.menu-button(@click="$router.push('/login')")
+        i.material-icons.login perm_identity
+        .menu-text Login
+      // span(href="login")
         i.material-icons add
-        router-link(to="/foo") Delete show
-      span
-        i.material-icons refresh
-        i(@click="$store.dispatch('getShowData')") Refresh
+        router-link(to="/foo") Add show
+      span.menu-button(@click="$store.dispatch('getShowData')")
+        i.material-icons.refresh refresh
+        .menu-text Refresh
     .page-content
-      //transition-group(name="top-enter", appear)
-      // 'show' must be a string here because of pug but in vanilla HTML would not be one
       spinner(:active="$store.state.appstate.spinnerActive")
-      show-panel(v-for='show in searchedShows', :show='show', :key="show.id")
+      transition-group(name="show-list")
+        // 'show' must be a string here because of pug but in vanilla HTML would not be one
+        show-panel(v-for='show in searchedShows', :show='show', :key="show.id")
 </template>
 --------------------------------------------------------------------------------
 <script>
-import TorrentDropdown from './MainView/TorrentDropdown';
 import ShowPanel from './MainView/ShowPanel';
 import Spinner from './MainView/Spinner';
 
@@ -107,7 +145,6 @@ export default {
     };
   },
   components: {
-    TorrentDropdown,
     ShowPanel,
     Spinner
   },

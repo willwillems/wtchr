@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import SeasonSelector from '../app/src/components/MainView/SeasonSelector'
+import SeasonSelector from '../app/src/renderer/components/MainView/SeasonSelector'
 
 test('The SeasonSelector Component', () => {
   expect(typeof SeasonSelector.data).toBe('function')

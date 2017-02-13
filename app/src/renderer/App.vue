@@ -28,7 +28,7 @@
 </template>
 
 <script>
-  import store from 'src/vuex/store';
+  import store from './vuex/store';
 
   export default {
     store,

@@ -1,14 +1,14 @@
 import localforage from 'localforage';
 
 var settingsStorage = localforage.createInstance({
-  name: "settings"
+  name: 'settings'
 });
 
 const state = {
   theTVDBLogin: {
-    APIKey: "",
-    username: "",
-    userkey: ""
+    APIKey: '',
+    username: '',
+    userkey: ''
   }
 };
 
