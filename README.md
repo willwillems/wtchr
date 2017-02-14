@@ -26,11 +26,11 @@ But please do not file large Pull request with multiple file modifications out o
 ## 📝 TODO
 - [ ] Sort shows by last aired episode not currently selected
 - [ ] Improve the styling of the "refresh" and "login" button
-- [ ] Stop fetching data that will never change (background image, certain showinfo, etc.)
 - [ ] Design tutorial for first time using the application
 - [ ] Give user more feedback with error messages, console is currently needed if anything goes wrong
 - [ ] Write more tests
-- [ ] First torrent when scraping is not being process 
+- [ ] First torrent when scraping is not being processed 
+- [ ] Redirect user from MainView to loginView when there are no login details present
 
 ## ⚙️ Build Setup
 
