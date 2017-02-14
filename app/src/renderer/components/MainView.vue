@@ -93,7 +93,7 @@ body {
   transition: all 1s;
 }
 // Fade in/out when a new list entry is added/removed
-.show-list-enter, .show-list-leave-to {
+.show-list-enter {
   opacity: 0;
 }
 // Swipe show to left when removing
