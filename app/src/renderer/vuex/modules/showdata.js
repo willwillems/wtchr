@@ -11,7 +11,8 @@ const getters = {
   sortedShows: state => {
     return state.shows.slice().sort((a, b) => {
       try {
-        return new Date(b.episodes.selectedEpisode.firstAired) - new Date(a.episodes.selectedEpisode.firstAired);
+        // sort on most recently aired episode (first element in last element of seasons array)
+        return new Date(b.episodes.seasons[b.episodes.seasons.length - 1][0].firstAired) - new Date(a.episodes.seasons[a.episodes.seasons.length - 1][0].firstAired);
       } catch (e) {
         if (e instanceof TypeError) {
           return state.shows;
