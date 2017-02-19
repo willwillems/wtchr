@@ -144,6 +144,11 @@ export default {
       searchQuery: ''
     };
   },
+  beforeCreate: function () {
+    if(!this.$store.getters.loginInfoIsPresent) {
+      this.$router.push('login');
+    };
+  },
   components: {
     ShowPanel,
     Spinner

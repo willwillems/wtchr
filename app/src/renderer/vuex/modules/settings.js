@@ -24,6 +24,12 @@ const mutations = {
   }
 };
 
+const getters = {
+  loginInfoIsPresent: state => {
+    return (!!state.theTVDBLogin.APIKey && !!state.theTVDBLogin.username && !!state.theTVDBLogin.userkey);
+  }
+};
+
 const actions = {
   getLocalData ({ commit }) {
     return settingsStorage.iterate(function (value, key) {
@@ -35,5 +41,6 @@ const actions = {
 export default {
   state,
   mutations,
-  actions
+  actions,
+  getters
 };

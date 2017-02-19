@@ -29,7 +29,6 @@ But please do not file large Pull request with multiple file modifications out o
 - [ ] Give user more feedback with error messages, console is currently needed if anything goes wrong
 - [ ] Write more tests
 - [ ] First torrent when scraping is not being processed
-- [ ] Redirect user from MainView to loginView when there are no login details present
 - [ ] If status code is 401 login info is incorrect
 
 ## ⚙️ Build Setup
