@@ -24,6 +24,8 @@ export function checkKey () {
   return _checkKey(keyIsValid, renewKey);
 };
 
+// TODO: If status code is 401 login info is incorrect
+
 export function _getAuthKey (fetch, settings) {
   return new Promise(function (resolve, reject) {
     checkKey();
