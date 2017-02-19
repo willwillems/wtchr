@@ -35,13 +35,13 @@ export function _getAuthKey (fetch, settings) {
       },
       body: JSON.stringify(settings.theTVDBLogin)
     })
-    .then(r => r.json())
-    .then(function (response) {
-      return resolve(response.token);
-    })
-    .catch(function (error) {
-      reject(Error(error));
-    });
+      .then(r => r.json())
+      .then(function (response) {
+        return resolve(response.token);
+      })
+      .catch(function (error) {
+        reject(Error(error));
+      });
   });
 };
 
@@ -59,9 +59,9 @@ export function _getFromTVDB (fetch, getAuthKey, path) {
           'Content-Type': 'application/json'
         }
       })
-      .then(r => r.json())
-      .then(r => resolve(r.data))
-      .catch(e => reject(Error(e)));
+        .then(r => r.json())
+        .then(r => resolve(r.data))
+        .catch(e => reject(Error(e)));
     });
   });
 };
@@ -73,9 +73,9 @@ export function getFromTVDB (path) {
 export function _getFavoriteShowIDs (getFromTVDB) {
   return new Promise(function (resolve, reject) {
     getFromTVDB('user/favorites')
-    .then(r => r.favorites)
-    .then(r => resolve(r))
-    .catch(e => reject(Error(e)));
+      .then(r => r.favorites)
+      .then(resolve)
+      .catch(e => reject(Error(e)));
   });
 };
 
@@ -86,8 +86,8 @@ export function getFavoriteShowIDs () {
 export function _getShowInfo (getFromTVDB, id) {
   return new Promise(function (resolve, reject) {
     getFromTVDB(`series/${id}`)
-    .then(r => resolve(r))
-    .catch(e => reject(Error(e)));
+      .then(resolve)
+      .catch(e => reject(Error(e)));
   });
 };
 
@@ -98,8 +98,8 @@ export function getShowInfo (id) {
 export function _getSeasons (getFromTVDB, id) {
   return new Promise(function (resolve, reject) {
     getFromTVDB(`series/${id}/episodes/summary`)
-    .then(r => resolve(r.airedSeasons))
-    .catch(e => reject(Error(e)));
+      .then(r => resolve(r.airedSeasons))
+      .catch(e => reject(Error(e)));
   });
 };
 
@@ -110,8 +110,8 @@ export function getSeasons (id) {
 export function _getEpisodes (getFromTVDB, id, season) {
   return new Promise(function (resolve, reject) {
     getFromTVDB(`series/${id}/episodes/query?airedSeason=${season}`)
-    .then(r => resolve(r))
-    .catch(e => reject(Error(e)));
+      .then(resolve)
+      .catch(e => reject(Error(e)));
   });
 };
 
@@ -122,14 +122,20 @@ export function getEpisodes (id, season) {
 export function _getFanArt (getFromTVDB, id) {
   return new Promise(function (resolve, reject) {
     getFromTVDB(`series/${id}/images/query?keyType=fanart&resolution=1920x1080&subKey=graphical`)
-    .then(r => (r === undefined ? resolve(undefined) : resolve(`https://thetvdb.com/banners/${r[0].fileName}`))) // ternary operator to prevent weird string
-    .catch(function (error) {
-      if (error.response.status === 404) {
-        return resolve(undefined); // Some shows are not populair enough to have fanart :(
-      } else {
-        reject(Error(error));
-      }
-    });
+      .then(r => {
+        try {
+          resolve(`https://thetvdb.com/banners/${r[0].fileName}`);
+        } catch (e) {
+          resolve(undefined);
+        }
+      })
+      .catch(function (error) {
+        if (error.response.status === 404) {
+          return resolve(undefined); // Some shows are not populair enough to have fanart :(
+        } else {
+          reject(Error(error));
+        }
+      });
   });
 };
 
@@ -158,15 +164,15 @@ export function _proccesShowData (shows) {
       Promise.all(shows.map(show => getFanArt(show.id))),
       Promise.all(shows.map(show => getSeasons(show.id)))
     ])
-    .then(function (response) {
-      return showsclosure.map((show, i) => {
-        show.image = response[0][i];
-        show.seasons = response[1][i];
-        return show;
-      });
-    })
-    .then(resolve)
-    .catch(e => reject(Error(e)));
+      .then(function (response) {
+        return showsclosure.map((show, i) => {
+          show.image = response[0][i];
+          show.seasons = response[1][i];
+          return show;
+        });
+      })
+      .then(resolve)
+      .catch(e => reject(Error(e)));
   });
 };
 
