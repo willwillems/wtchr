@@ -16,6 +16,7 @@ describe('The getAuthKey function', () => {
 
     const fakeFetch = (url, headers, body) => {
       return Promise.resolve({
+        ok: true,
         json: () => Promise.resolve({
           token: fakeKey
         })
@@ -25,6 +26,24 @@ describe('The getAuthKey function', () => {
     return _getAuthKey(fakeFetch, fakeSettings)
       .then( key => expect(key).toBe(fakeKey) );
   });
+  /*
+  it('will give a correct error message', () => {
+    const fakeKey = "abc-123";
+    const fakeSettings = { theTVDBLogin: {} };
+
+    const fakeFetch = (url, headers, body) => {
+      return Promise.resolve({
+        ok: false,
+        json: () => Promise.resolve({
+          token: fakeKey
+        })
+      });
+    };
+
+    return _getAuthKey(fakeFetch, fakeSettings)
+      .catch( key => expect(key).toBe(fakeKey) );
+  });
+  */
 });
 
 describe('The getFromTVDB function', () => {
@@ -120,7 +139,7 @@ describe('The getFanArt function', () => {
   it('will resolve undefined when no fanArt is avaliable', () => {
     const emptyList = [];
     const fakeGetFromTVDBEmpty = (path) => fakeGetFromTVDB(path, emptyList);
-    
+
     return _getFanArt(fakeGetFromTVDBEmpty, "showID")
       .then( seasons => expect(seasons).toBe( undefined ) );
   });
