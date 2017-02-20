@@ -122,7 +122,7 @@ body {
       // span(href="login")
         i.material-icons add
         router-link(to="/foo") Add show
-      span.menu-button(@click="$store.dispatch('getShowData')")
+      span.menu-button(@click="refreshShowData")
         i.material-icons.refresh refresh
         .menu-text Refresh
     .page-content
@@ -152,6 +152,14 @@ export default {
   components: {
     ShowPanel,
     Spinner
+  },
+  methods: {
+    refreshShowData: function () {
+        this.$store.commit('setSpinner', true);
+        this.$store.dispatch('getLocalData')
+          .then(() => this.$store.dispatch('getShowData'))
+          .then(() => this.$store.commit('setSpinner', false));
+    }
   },
   computed: {
     searchedShows: function () {
