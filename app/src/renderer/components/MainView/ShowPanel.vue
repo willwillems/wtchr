@@ -87,7 +87,7 @@
     .fliepeltje
     .description {{show.description}}
     season-selector(id="seasonselector", :show="show")
-    .panel(:style="{'background-image': 'url(' + show.image + ')'}")
+    .panel(:style="backgroundImageStyle")
       torrent-dropdown(id="dropdown", width="500px", :show="show")
 </template>
 --------------------------------------------------------------------------------
@@ -110,6 +110,13 @@ export default {
     SeasonSelector
   },
   watch: {
+  },
+  computed: {
+    backgroundImageStyle: function () {
+      if(this.show.image) {
+        return {'background-image': `url(${this.show.image})`}
+      }
+    }
   }
 };
 </script>
