@@ -25,6 +25,7 @@ function createWindow () {
 
   mainWindow.on('closed', () => {
     mainWindow = null;
+    app.quit();
   });
 
   // eslint-disable-next-line no-console
