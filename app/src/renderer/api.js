@@ -1,3 +1,5 @@
+import log from './log'
+
 export function _renewKey () {
   return;
 };
@@ -24,8 +26,6 @@ export function checkKey () {
   return _checkKey(keyIsValid, renewKey);
 };
 
-// TODO: If status code is 401 login info is incorrect
-
 export function _getAuthKey (fetch, settings) {
   return new Promise(function (resolve, reject) {
     checkKey();
@@ -37,12 +37,22 @@ export function _getAuthKey (fetch, settings) {
       },
       body: JSON.stringify(settings.theTVDBLogin)
     })
-      .then(r => r.json())
+      .then(r => {
+        if(!r.ok) {
+          throw (r);
+        }
+        return r.json();
+      })
       .then(function (response) {
         return resolve(response.token);
       })
       .catch(function (error) {
-        reject(Error(error));
+        if (error.status === 401) {
+          log.error("Acces Denied, login info was incorrect");
+        } else {
+          log.error(error)
+        };
+
       });
   });
 };
@@ -194,7 +204,7 @@ export function _produceShowData (showIDArray) {
     Promise.all(showIDArray.map(getShowInfo))
       .then(proccesShowData)
       .then(resolve)
-      .catch(e => reject(Error(e)));
+      .catch(e => reject(e));
   });
 };
 

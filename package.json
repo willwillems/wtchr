@@ -81,5 +81,8 @@
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "get-env": "^0.5.10",
+    "sweetalert2": "^6.4.2"
+  }
 }
