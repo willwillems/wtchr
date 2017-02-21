@@ -7,7 +7,6 @@
     "cheerio": "^0.22.0",
     "electron": "^1.4.15",
     "localforage": "^1.4.3",
-    "scrape-it": "2.0.0",
     "vue": "^2.1.10",
     "vue-electron": "^1.0.6",
     "vue-resource": "^1.0.3",
