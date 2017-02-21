@@ -6,7 +6,9 @@ function getTorrents (show) {
       return res.text();
     })
     .then(html => {
-      const $ = cheerio.load(html);
+      const $ = cheerio.load(html, {
+          normalizeWhitespace: true
+      });
       const listElements = $("tr");
       const torrentList = Object.keys(listElements)
         .map(key => listElements[key]) // convert object to array
@@ -23,9 +25,11 @@ function getTorrents (show) {
       };
       return torrentList.reduce((result, el) => {
         try {
+          console.log(el);
           return [...result, {
-            size: el.children[3].children[8].children[0].data.split(',')[1].slice(6),
-            date: el.children[3].children[8].children[0].data.split(',')[0].slice(9),
+            // No negative index in JS :(
+            size: el.children[3].children[el.children[3].children.length -2].children[0].data.split(',')[1].slice(6),
+            date: el.children[3].children[el.children[3].children.length -2].children[0].data.split(',')[0].slice(9),
             magnetlink: el.children[3].children[3].attribs.href,
             title: el.children[3].children[1].children[1].firstChild.data,
             seeders: el.children[5].firstChild.data,

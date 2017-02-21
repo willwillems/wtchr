@@ -28,7 +28,6 @@ But please do not file large Pull request with multiple file modifications out o
 - [ ] Design tutorial for first time using the application
 - [ ] Give user more feedback with error messages, console is currently needed if anything goes wrong
 - [ ] Write more tests
-- [ ] First torrent when scraping is not being processed
 
 ## ⚙️ Build Setup
 
