@@ -46,7 +46,7 @@ const mutations = {
 
 const actions = {
   getShowData ({ commit, dispatch, state, rootState }) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       setCredentials(rootState.settings);
       getFavoriteShowIDs()
         .then(ids => {
@@ -67,7 +67,7 @@ const actions = {
     });
   },
   getEpisodes ({ commit }, { id, season }) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       getEpisodes(id, season)
         .then(function (response) {
           // console.log('getEpisodes response: showid:', id, 'season:', season, 'data:', response);

@@ -1,4 +1,4 @@
-import log from './log'
+import log from './log';
 
 export function _renewKey () {
   return;
@@ -38,7 +38,7 @@ export function _getAuthKey (fetch, settings) {
       body: JSON.stringify(settings.theTVDBLogin)
     })
       .then(r => {
-        if(!r.ok) {
+        if (!r.ok) {
           throw (r);
         }
         return r.json();
@@ -50,9 +50,8 @@ export function _getAuthKey (fetch, settings) {
         if (error.status === 401) {
           log.error("Acces Denied, login info was incorrect");
         } else {
-          log.error(error)
+          log.error(error);
         };
-
       });
   });
 };

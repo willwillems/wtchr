@@ -145,7 +145,7 @@ export default {
     };
   },
   beforeCreate: function () {
-    if(!this.$store.getters.loginInfoIsPresent) {
+    if (!this.$store.getters.loginInfoIsPresent) {
       this.$router.push('login');
     };
   },
@@ -155,10 +155,10 @@ export default {
   },
   methods: {
     refreshShowData: function () {
-        this.$store.commit('setSpinner', true);
-        this.$store.dispatch('getLocalData')
-          .then(() => this.$store.dispatch('getShowData'))
-          .then(() => this.$store.commit('setSpinner', false));
+      this.$store.commit('setSpinner', true);
+      this.$store.dispatch('getLocalData')
+        .then(() => this.$store.dispatch('getShowData'))
+        .then(() => this.$store.commit('setSpinner', false));
     }
   },
   computed: {

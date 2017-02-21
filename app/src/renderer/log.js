@@ -1,5 +1,5 @@
 import getenv from 'get-env';
-const env = getenv(['docker', 'test'])
+const env = getenv(['docker', 'test']);
 
 const error = function (error) {
   if (env === 'prod') {
@@ -9,4 +9,4 @@ const error = function (error) {
   };
 };
 
-export default {error}
+export default {error};

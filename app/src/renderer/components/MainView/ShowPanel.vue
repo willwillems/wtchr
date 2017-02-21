@@ -113,8 +113,8 @@ export default {
   },
   computed: {
     backgroundImageStyle: function () {
-      if(this.show.image) {
-        return {'background-image': `url(${this.show.image})`}
+      if (this.show.image) {
+        return {'background-image': `url(${this.show.image})`};
       }
     }
   }
