@@ -14,9 +14,11 @@ How to use:
 
 ## 🔧 Technologies Used
 - [Vue.js](https://github.com/vuejs/vue)
+- [Vuex](https://github.com/vuejs/vuex/)
+- [Vue-router](https://github.com/vuejs/vue-router)
 - [Electron](https://github.com/electron/electron)
 - [LocalForage](https://github.com/localForage/localForage)
-- [Scrape-It](https://github.com/IonicaBizau/scrape-it)
+- [Cheerio](https://github.com/cheeriojs/cheerio)
 
 ## 🙌 Contributing
 Currently the project is still in its infancy phase, if you have ideas, suggestions or anything else do not hesitate to open an issue. Every form of help is more than welcome!
