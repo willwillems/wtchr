@@ -10,6 +10,7 @@ function getTorrents (show) {
         normalizeWhitespace: true
       });
       const listElements = $("tr");
+      // convert object to an array and filter out the elements we don't need
       const torrentList = Object.keys(listElements)
         .map(key => listElements[key]) // convert object to array
         .filter(function (el) {
