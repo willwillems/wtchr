@@ -69,9 +69,16 @@ body {
           transform: scale(1.1);
         }
       }
-      // .menu-text {
-      //   display: block;
-      // }
+    }
+    &:active {
+      .material-icons {
+        background-color: $prim-red;
+        color: white;
+        &.refresh {
+        }
+        &.login {
+        }
+      }
     }
     .menu-text {
       font-size: 8px;
