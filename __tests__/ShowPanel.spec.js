@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import ShowPanel from '../app/src/renderer/components/MainView/ShowPanel'
+import ShowPanel from '../app/src/renderer/components/mainView/ShowPanel'
 
 describe('The ShowPanel component', () => {
   it('Should contain an object by default', () => {

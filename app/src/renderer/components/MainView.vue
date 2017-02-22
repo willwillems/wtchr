@@ -140,8 +140,8 @@ body {
 </template>
 --------------------------------------------------------------------------------
 <script>
-import ShowPanel from './MainView/ShowPanel';
-import Spinner from './MainView/Spinner';
+import ShowPanel from './mainView/ShowPanel';
+import Spinner from './mainView/Spinner';
 
 export default {
   name: 'main',
