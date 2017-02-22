@@ -5,7 +5,7 @@
   width: 40px;
   height: 40px;
   display: none;
-  position: absolute;
+  position: fixed;
   left: calc(50% - 20px);
   top: calc(50% - 20px);
   z-index: 10;
