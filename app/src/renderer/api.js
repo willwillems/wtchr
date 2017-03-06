@@ -47,11 +47,13 @@ export function _getAuthKey (fetch, settings) {
         return resolve(response.token);
       })
       .catch(function (error) {
-        if (error.status === 401) {
-          log.error("Acces Denied, login info was incorrect");
-        } else {
+        try {
+          if (error.status === 401) {
+            log.error("Acces Denied, login info was incorrect");
+          };
+        } catch (e) {
           log.error(error);
-        };
+        }
       });
   });
 };
