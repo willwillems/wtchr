@@ -121,7 +121,7 @@ body {
 --------------------------------------------------------------------------------
 <template lang="pug">
   #main
-    .menu-bar(@click="$store.commit('deleteShowFromShows', 247808)")
+    .menu-bar
       input(type="text", placeholder="Search", v-model="searchQuery")
       span.menu-button(@click="$router.push('/login')")
         i.material-icons.login perm_identity
