@@ -99,6 +99,7 @@ a {
 </template>
 --------------------------------------------------------------------------------
 <script>
+import { mapState } from 'vuex';
 import getTorrents from '../../scraper';
 
 export default {
@@ -149,8 +150,11 @@ export default {
   },
   computed: {
     selectedEpisode () {
-      return this.show.episodes.selectedEpisode;
-    }
+      return this.showAppState[this.show.id].selectedEpisode;
+    },
+    ...mapState({
+      showAppState: state => state.showdata.showAppState
+    })
   },
   watch: {
     selectedEpisode: function (val) {

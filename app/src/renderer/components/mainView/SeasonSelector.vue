@@ -53,18 +53,20 @@
 </style>
 --------------------------------------------------------------------------------
 <template lang="pug">
-  .season-panel(@click="showpanelIsActive = !showpanelIsActive", :class="{ active: showpanelIsActive }")
-      .episode(:class="{ active: showpanelIsActive }")
+  .season-panel(@click="seasonPanelIsActive = !seasonPanelIsActive", :class="{ active: seasonPanelIsActive }")
+      .episode(:class="{ active: seasonPanelIsActive }")
           .season-number S{{selectedEpisode.airedSeason}} E{{selectedEpisode.airedEpisodeNumber}}
           .episode-date {{selectedEpisode.firstAired}}
           .episode-name {{selectedEpisode.episodeName}}
-      .episode(v-for="episode in episodes", :class="{ active: showpanelIsActive }", @click="$store.commit('setSelectedEpisode', {id: show.id, episode});")
+      .episode(v-for="episode in airedEpisodes", :class="{ active: seasonPanelIsActive }", @click="$store.commit('setSelectedEpisode', {id: show.id, episode});")
           .season-number S{{episode.airedSeason}} E{{episode.airedEpisodeNumber}}
           .episode-date {{episode.firstAired}}
           .episode-name {{episode.episodeName}}
 </template>
 --------------------------------------------------------------------------------
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'seasonSelector',
   props: [
@@ -72,19 +74,21 @@ export default {
   ],
   data () {
     return {
-      showpanelIsActive: false,
-      activeSeason: ''
+      seasonPanelIsActive: false
     };
   },
-  created: function () {
-    this.setActiveSeason();
+  created () {
+    if (!this.activeSeason) {
+      this.setActiveSeason();
+    };
   },
   methods: {
     setActiveSeason: function () {
-      // Math.max cant be used because not every element in the array can be converted into a number (observer el)
-      this.activeSeason = Math.max.apply(Math, this.show.seasons);
+      this.$store.commit('setActiveSeasonToNewest', {
+        id: this.show.id
+      });
       // If there are no episodes of the current active season yet, fetch them
-      if (this.episodes === null) {
+      if (this.episodes === []) {
         this.getEpisodes();
       };
     },
@@ -96,39 +100,65 @@ export default {
     }
   },
   computed: {
+    activeSeason () {
+      try {
+        return this.showAppState[this.show.id].activeSeason;
+      } catch (e) {
+        if (e instanceof TypeError) {
+          return undefined;
+        }
+      };
+    },
     episodes () {
+      // If there is no active season there are no eps avaliable
+      if (typeof this.activeSeason === "undefined") {
+        return [];
+      };
       // To prevent vue from getting properties from undefined in the template
       if (typeof this.show.episodes.seasons[this.activeSeason] === 'undefined') {
-        return {};
+        return [];
       };
       return this.show.episodes.seasons[this.activeSeason];
     },
+    airedEpisodes () {
+      return this.episodes.filter((eps) => new Date(eps.firstAired) < new Date())
+    },
     selectedEpisode () {
       // To prevent vue from getting properties from undefined in the template
-      if (typeof this.show.episodes.selectedEpisode === 'undefined') {
+      if (typeof this.showAppState[this.show.id] === 'undefined' ||
+          typeof this.showAppState[this.show.id].selectedEpisode === "undefined") {
         return {};
       };
-      return this.show.episodes.selectedEpisode;
-    }
+      return this.showAppState[this.show.id].selectedEpisode;
+    },
+    ...mapState({
+      showAppState: state => state.showdata.showAppState
+    })
   },
   watch: {
-    episodes: function (val) {
-      if (val.length === 0) {
-        // If there are no episodes in the season take the previous one.
-        this.activeSeason = (this.activeSeason - 1);
-      };
-      if (val === {} || val === [] || (typeof val === 'undefined')) {
-        this.getEpisodes();
-      }
-    },
-    selectedEpisode: function (val) {
-      if (typeof val === 'undefined' || !val.hasOwnProperty('id')) {
-        this.getEpisodes();
-      };
-    },
-    activeSeason: function (val) {
-      if (typeof val !== 'number') {
-        this.setActiveSeason();
+    airedEpisodes: function (val) {
+      // If there are no aired episodes but there are episodes
+      // and the active season is not the first season
+      const previousSeason = this.activeSeason - 1;
+      if (val.length === 0 && this.episodes.length > 0 && previousSeason >= 1) {
+        // First get the episodes for the previous season,
+        // then set the active season
+        this.$store.dispatch('getEpisodes', {
+          id: this.show.id,
+          season: previousSeason
+        })
+        .then(() => {
+          this.$store.commit('setActiveSeason', {
+            id: this.show.id,
+            season: previousSeason
+          });
+        });
+      } else if (typeof val[0] !== "undefined") {
+        // If the list of airedEpisodes changes update the selected eps to the newest
+        this.$store.commit('setSelectedEpisode', {
+          id: this.show.id,
+          episode: val[0]
+        });
       };
     }
   }

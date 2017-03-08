@@ -4,7 +4,8 @@ import { produceShowData, getEpisodes, getFavoriteShowIDs, setCredentials } from
 
 // We'll later restructure this so instead of a list and object its one object like this: {123143: {title: "homeland" ---}, ----}
 const state = {
-  shows: []
+  shows: [],
+  showAppState: {}
 };
 
 const getters = {
@@ -21,6 +22,9 @@ const getters = {
         }
       }
     });
+  },
+  mostRecentSeason: (state) => (id) => {
+    return Math.max.apply(Math, state.shows.find(show => show.id === id).seasons);
   }
 };
 
@@ -35,7 +39,28 @@ const mutations = {
     Vue.set(state.shows.find(show => show.id === id).episodes.seasons, season, list);
   },
   setSelectedEpisode (state, {id, episode}) {
-    state.shows.find(show => show.id === id).episodes.selectedEpisode = episode;
+    if (typeof state.showAppState[id] === "undefined") {
+      // Create the object if it does not exist
+      Vue.set(state.showAppState, id, {});
+    }
+    Vue.set(state.showAppState[id], "selectedEpisode", episode);
+  },
+  setActiveSeason (state, {id, season}) {
+    if (typeof state.showAppState[id] === "undefined") {
+      // Create the object if it does not exist
+      Vue.set(state.showAppState, id, {});
+    }
+    Vue.set(state.showAppState[id], "activeSeason", parseInt(season));
+  },
+  setActiveSeasonToNewest (state, {id}) {
+    // Math.max cant be used because not every element in the array can be converted into a number (observer el)
+    const seasons = state.shows.find(show => show.id === id).seasons;
+    const newestSeason = Math.max.apply(Math, seasons);
+    if (typeof state.showAppState[id] === "undefined") {
+      // Create the object if it does not exist
+      Vue.set(state.showAppState, id, {});
+    }
+    Vue.set(state.showAppState[id], "activeSeason", newestSeason);
   },
   deleteShowFromShows (state, id) {
     state.shows = state.shows.filter(show => {
@@ -72,7 +97,6 @@ const actions = {
         .then(function (response) {
           // console.log('getEpisodes response: showid:', id, 'season:', season, 'data:', response);
           const list = response
-            .filter((eps) => new Date(eps.firstAired).valueOf() < new Date().valueOf())
             .map((eps) => {
               // convert episode nr's to strings and fixed lenght of two
               eps.airedEpisodeNumber = eps.airedEpisodeNumber < 10 ? '0' + eps.airedEpisodeNumber : String(eps.airedEpisodeNumber);
@@ -80,14 +104,11 @@ const actions = {
               return eps;
             });
           list.reverse(); // So the list is ordered most recent -> old
+          // setActiveSeason does not belong here
           commit('setEpisodes', {
             id,
             season,
             list
-          });
-          commit('setSelectedEpisode', {
-            id,
-            episode: list[0]
           });
         })
         .then(resolve)
