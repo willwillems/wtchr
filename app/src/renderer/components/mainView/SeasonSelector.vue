@@ -2,6 +2,22 @@
 <style lang="scss" scoped>
 @import "../../assets/sass/colors";
 
+.container {
+  z-index: 1;
+}
+
+.season-list {
+  text-align: end;
+  padding: 0px 4px 4px 0px;
+
+  b {
+    color: white;
+    border-radius: 50%;
+    margin: 4px;
+    text-align: center;
+  }
+}
+
 .season-panel {
     float: left;
     width: 10rem;
@@ -53,15 +69,18 @@
 </style>
 --------------------------------------------------------------------------------
 <template lang="pug">
-  .season-panel(@click="seasonPanelIsActive = !seasonPanelIsActive", :class="{ active: seasonPanelIsActive }")
-      .episode(:class="{ active: seasonPanelIsActive }")
-          .season-number S{{selectedEpisode.airedSeason}} E{{selectedEpisode.airedEpisodeNumber}}
-          .episode-date {{selectedEpisode.firstAired}}
-          .episode-name {{selectedEpisode.episodeName}}
-      .episode(v-for="episode in airedEpisodes", :class="{ active: seasonPanelIsActive }", @click="$store.commit('setSelectedEpisode', {id: show.id, episode});")
-          .season-number S{{episode.airedSeason}} E{{episode.airedEpisodeNumber}}
-          .episode-date {{episode.firstAired}}
-          .episode-name {{episode.episodeName}}
+  .container
+    .season-list
+      b(v-for="season in seasons", @click="setActiveSeason(season)") {{season}}
+    .season-panel(@click="seasonPanelIsActive = !seasonPanelIsActive", :class="{ active: seasonPanelIsActive }")
+        .episode(:class="{ active: seasonPanelIsActive }")
+            .season-number S{{selectedEpisode.airedSeason}} E{{selectedEpisode.airedEpisodeNumber}}
+            .episode-date {{selectedEpisode.firstAired}}
+            .episode-name {{selectedEpisode.episodeName}}
+        .episode(v-for="episode in airedEpisodes", :class="{ active: seasonPanelIsActive }", @click="$store.commit('setSelectedEpisode', {id: show.id, episode});")
+            .season-number S{{episode.airedSeason}} E{{episode.airedEpisodeNumber}}
+            .episode-date {{episode.firstAired}}
+            .episode-name {{episode.episodeName}}
 </template>
 --------------------------------------------------------------------------------
 <script>
@@ -79,11 +98,21 @@ export default {
   },
   created () {
     if (!this.activeSeason) {
-      this.setActiveSeason();
+      this.setActiveSeasonToNewest();
     };
   },
   methods: {
-    setActiveSeason: function () {
+    setActiveSeason: function (season) {
+      this.$store.commit('setActiveSeason', {
+        id: this.show.id,
+        season
+      });
+      // If there are no episodes of the current active season yet, fetch them
+      if (this.episodes === []) {
+        this.getEpisodes();
+      };
+    },
+    setActiveSeasonToNewest: function () {
       this.$store.commit('setActiveSeasonToNewest', {
         id: this.show.id
       });
@@ -118,10 +147,22 @@ export default {
       if (typeof this.show.episodes.seasons[this.activeSeason] === 'undefined') {
         return [];
       };
+      if (this.show.episodes.seasons[this.activeSeason] === null) {
+        return [];
+      };
       return this.show.episodes.seasons[this.activeSeason];
     },
+    seasons () {
+      // zero values (special eps) fuck everything up, fix later
+      return Object.values(this.show.seasons).filter(e => e != 0).sort();
+    },
     airedEpisodes () {
-      return this.episodes.filter((eps) => new Date(eps.firstAired) < new Date())
+      try {
+        return this.episodes.filter((eps) => new Date(eps.firstAired) < new Date());
+      } catch (e) {
+        console.log(e)
+        return [];
+      };
     },
     selectedEpisode () {
       // To prevent vue from getting properties from undefined in the template
@@ -140,7 +181,15 @@ export default {
       // If there are no aired episodes but there are episodes
       // and the active season is not the first season
       const previousSeason = this.activeSeason - 1;
-      if (val.length === 0 && this.episodes.length > 0 && previousSeason >= 1) {
+      console.log(this.episodes)
+      if (val.length === 0 && this.episodes.length === 0) {
+        // First get the episodes for the previous season,
+        // then set the active season
+        this.$store.dispatch('getEpisodes', {
+          id: this.show.id,
+          season: this.activeSeason
+        });
+      } else if (val.length === 0 && this.episodes.length > 0 && previousSeason >= 1) {
         // First get the episodes for the previous season,
         // then set the active season
         this.$store.dispatch('getEpisodes', {
